@@ -6,12 +6,15 @@ import './style.css';
 function Loja() {
 
   const [classe, setClasse] = useState('inactive');
+  const [icone, setIcone] = useState('up');
 
   function resumoPedido() {
     if (classe === 'inactive') {
       setClasse('active');
+      setIcone('down');
     } else if (classe === 'active') {
       setClasse('inactive');
+      setIcone('up');
     }
   }
 
@@ -35,7 +38,7 @@ function Loja() {
               Resumo do Pedido
             </div>
             <div className="ir-ao-topo">
-              <i className="fas fa-arrow-alt-circle-up"></i>
+              <i className={`fas fa-arrow-alt-circle-${icone}`}></i>
             </div>
           </div>
           <div className={classe}>

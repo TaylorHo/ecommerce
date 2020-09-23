@@ -31,8 +31,6 @@ main .resumo-do-pedido {
 main .resumo-do-pedido .topo-do-pedido {
     background-color: var(--color-red);
     height: 56px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
     color: var(--color-text-button);
     border: unset;
     font-size: 2rem;
@@ -65,4 +63,6 @@ main .resumo-do-pedido .inactive {
 
 main .resumo-do-pedido .active {
     display: block;
+    background-color: var(--color-background);
+    height: calc(100vh - 56px);
 }
