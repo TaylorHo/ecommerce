@@ -11,3 +11,38 @@ header {
 header img {
     max-width: 200px;
 }
+
+main {
+    width: 100%;
+}
+
+main .categorias-topo {
+    padding: 5%;
+    position: sticky;
+    top: 0;
+}
+
+main .resumo-do-pedido {
+    position: fixed;
+    bottom: 0;
+    width:100%;
+}
+
+main .resumo-do-pedido .topo-do-pedido {
+    background-color: var(--color-red);
+    height: 56px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    color: var(--color-text-button);
+    border: unset;
+    font-size: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-content: space-around;
+    align-content: space-around;
+    text-align: center;
+}
+
+main .resumo-do-pedido .pedido {
+    display: none;
+}

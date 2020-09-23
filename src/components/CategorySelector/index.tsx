@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import './style.css';
+
 function CategorySelector(){
     const [category, setCategory] = useState('');
 

@@ -12,8 +12,24 @@ function Loja() {
         </div>
       </header>
       <main>
-        <div className="content">
+        <div className="categorias-topo">
           <CategorySelector />
+        </div>
+        <div className="resumo-do-pedido">
+          <div className="topo-do-pedido">
+            <div className="counter">
+              0
+            </div>
+            <div className="titulo">
+              Resumo do Pedido
+            </div>
+            <div className="ir-ao-topo">
+            <span id="ir-ao-topo">^</span>
+            </div>
+          </div>
+          <div className="pedido">
+            <div className="detalhes-do-pedido">Detalhhes do pedido</div>
+          </div>
         </div>
       </main>
     </>
