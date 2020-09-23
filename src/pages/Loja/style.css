@@ -38,11 +38,31 @@ main .resumo-do-pedido .topo-do-pedido {
     font-size: 2rem;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    justify-content: space-around;
-    align-content: space-around;
+    align-content: center;
+    justify-content: center;
     text-align: center;
 }
 
-main .resumo-do-pedido .pedido {
+main .resumo-do-pedido .topo-do-pedido .counter {
+    background-color: var(--color-text-button);
+    color: var(--color-red);
+    border-radius: 2.4rem;
+    width: 3rem;
+    height: 2.2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-left: 35%;
+    margin-top: 0.5rem;
+}
+
+main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
+    font-size: 3.2rem;
+}
+
+main .resumo-do-pedido .inactive {
     display: none;
+}
+
+main .resumo-do-pedido .active {
+    display: block;
 }

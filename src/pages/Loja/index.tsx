@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CategorySelector from '../../components/CategorySelector';
 
 import './style.css';
 
 function Loja() {
+
+  const [classe, setClasse] = useState('inactive');
+
+  function resumoPedido() {
+    if (classe === 'inactive') {
+      setClasse('active');
+    } else if (classe === 'active') {
+      setClasse('inactive');
+    }
+  }
+
   return (
     <>
       <header>
@@ -15,7 +26,7 @@ function Loja() {
         <div className="categorias-topo">
           <CategorySelector />
         </div>
-        <div className="resumo-do-pedido">
+        <div className="resumo-do-pedido" onClick={resumoPedido}>
           <div className="topo-do-pedido">
             <div className="counter">
               0
@@ -24,11 +35,11 @@ function Loja() {
               Resumo do Pedido
             </div>
             <div className="ir-ao-topo">
-            <span id="ir-ao-topo">^</span>
+              <i className="fas fa-arrow-alt-circle-up"></i>
             </div>
           </div>
-          <div className="pedido">
-            <div className="detalhes-do-pedido">Detalhhes do pedido</div>
+          <div className={classe}>
+            <div className="detalhes-do-pedido">Detalhes do pedido</div>
           </div>
         </div>
       </main>
