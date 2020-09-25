@@ -14,12 +14,34 @@ header img {
 
 main {
     width: 100%;
+    align-items: center;
+    text-align: center;
+}
+
+main .pagina {
+    width: 90%;
+    margin: auto 5%;
+    flex-wrap: wrap;
+    padding-top: 620px;
+}
+
+main .separador-topo {
+    height: 20px;
+    width: 100%;
+    background: var(--color-background);
+    position: sticky;
+    top: -5px;
 }
 
 main .categorias-topo {
-    padding: 5%;
+    width: 100%;
     position: sticky;
-    top: 0;
+    top: 10px;
+    background: var(--color-gray-lighter);
+    padding: 20px 10px;
+    border: 1px solid var(--color-gray-border);
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 main .resumo-do-pedido {
@@ -50,11 +72,15 @@ main .resumo-do-pedido .topo-do-pedido .counter {
     font-size: 1.6rem;
     font-weight: 600;
     margin-left: 35%;
-    margin-top: 0.5rem;
+    margin-top: 2rem;
+}
+
+main .resumo-do-pedido .topo-do-pedido .titulo {
+    margin-top: 1.5rem;
 }
 
 main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
-    font-size: 3.2rem;
+    font-size: 6rem;
 }
 
 main .resumo-do-pedido .inactive {

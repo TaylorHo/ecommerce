@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import CategorySelector from '../../components/CategorySelector';
+import ProductCategory from '../../components/ProductCategory';
 
-import './style.css';
+import './styles.css';
 
 function Loja() {
 
@@ -26,9 +27,17 @@ function Loja() {
         </div>
       </header>
       <main>
-        <div className="categorias-topo">
-          <CategorySelector />
+
+        <div className="pagina">
+          <div className="separador-topo"></div>
+          <div className="categorias-topo">
+            <CategorySelector />
+          </div>
+          <div className="produtos">
+            <ProductCategory />
+          </div>
         </div>
+
         <div className="resumo-do-pedido" onClick={resumoPedido}>
           <div className="topo-do-pedido">
             <div className="counter">
@@ -38,7 +47,7 @@ function Loja() {
               Resumo do Pedido
             </div>
             <div className="ir-ao-topo">
-              <i className={`fas fa-arrow-alt-circle-${icone}`}></i>
+              <i className="material-icons">{`keyboard_arrow_${icone}`}</i>
             </div>
           </div>
           <div className={classe}>

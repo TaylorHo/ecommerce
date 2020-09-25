@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import './style.css';
+import './styles.css';
 
 function CategorySelector(){
     const [category, setCategory] = useState('');

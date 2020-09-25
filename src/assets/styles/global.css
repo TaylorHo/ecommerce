@@ -9,6 +9,10 @@
   --color-banner: #000000;
   --color-select-border: #ddd;
 
+  --color-gray-lighter: #f9f9f9;
+  --color-gray-border: #ededed;
+  --color-gray-darker: #dcdcdc;
+
 }
 
 * {
