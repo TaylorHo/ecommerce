@@ -1,10 +1,10 @@
 import React from 'react';
 import './assets/styles/global.css';
-import Routes from './routes';
+import Loja from './Loja';
 
 function App() {
   return (
-    <Routes />
+    <Loja />
   );
 }
 

@@ -1,3 +1,5 @@
+/* CABEÇALHO - INÍCIO */
+
 header {
     height: 100px;
     width: 100%;
@@ -6,51 +8,34 @@ header {
     top: 0;
     background-color: var(--color-banner);
     text-align: center;
-}
-
-header img {
+  }
+  
+  header img {
     max-width: 200px;
-}
+  }
+  
+  /* CABEÇALHO - FIM */
+  
+  .pagina {
+    width: 90%;
+    margin: 80px 5%;
+  }
 
-main {
+  /* RESUMO DO PEDIDO - INÍCIO */
+  
+  main {
     width: 100%;
     align-items: center;
     text-align: center;
-}
-
-main .pagina {
-    width: 90%;
-    margin: auto 5%;
-    flex-wrap: wrap;
-    padding-top: 620px;
-}
-
-main .separador-topo {
-    height: 20px;
-    width: 100%;
-    background: var(--color-background);
-    position: sticky;
-    top: -5px;
-}
-
-main .categorias-topo {
-    width: 100%;
-    position: sticky;
-    top: 10px;
-    background: var(--color-gray-lighter);
-    padding: 20px 10px;
-    border: 1px solid var(--color-gray-border);
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-main .resumo-do-pedido {
+  }
+  
+  main .resumo-do-pedido {
     position: fixed;
     bottom: 0;
     width:100%;
-}
-
-main .resumo-do-pedido .topo-do-pedido {
+  }
+  
+  main .resumo-do-pedido .topo-do-pedido {
     background-color: var(--color-red);
     height: 56px;
     color: var(--color-text-button);
@@ -61,9 +46,9 @@ main .resumo-do-pedido .topo-do-pedido {
     align-content: center;
     justify-content: center;
     text-align: center;
-}
-
-main .resumo-do-pedido .topo-do-pedido .counter {
+  }
+  
+  main .resumo-do-pedido .topo-do-pedido .counter {
     background-color: var(--color-text-button);
     color: var(--color-red);
     border-radius: 2.4rem;
@@ -73,22 +58,24 @@ main .resumo-do-pedido .topo-do-pedido .counter {
     font-weight: 600;
     margin-left: 35%;
     margin-top: 2rem;
-}
-
-main .resumo-do-pedido .topo-do-pedido .titulo {
+  }
+  
+  main .resumo-do-pedido .topo-do-pedido .titulo {
     margin-top: 1.5rem;
-}
-
-main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
+  }
+  
+  main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
     font-size: 6rem;
-}
-
-main .resumo-do-pedido .inactive {
+  }
+  
+  main .resumo-do-pedido .inactive {
     display: none;
-}
-
-main .resumo-do-pedido .active {
+  }
+  
+  main .resumo-do-pedido .active {
     display: block;
     background-color: var(--color-background);
     height: calc(100vh - 56px);
-}
+  }
+  
+  /* RESUMO DO PEDIDO - FIM */

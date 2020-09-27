@@ -1,9 +1,22 @@
-.select-block {
+.separador-topo {
+    height: 20px;
+    width: 100%;
+    background: var(--color-background);
     position: sticky;
-    top: 0;
-}
-
-.select-block select {
+    top: -5px;
+  }
+  
+  .select-block {
+    position: sticky;
+    top: 10px;
+    background: var(--color-gray-lighter);
+    padding: 20px 10px;
+    border: 1px solid var(--color-gray-border);
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .select-block select {
     width: 100%;
     height: 4rem;
     border-radius: 0.5rem;
@@ -14,4 +27,4 @@
     padding: 0 1.6rem;
     font: 1.6rem Archivo;
     overflow: hidden;
-}
+  }
