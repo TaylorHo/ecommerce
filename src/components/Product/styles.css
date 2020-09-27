@@ -1,0 +1,66 @@
+.item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1.75fr;
+  grid-template-areas: "descricao imagem";
+  align-content: center;
+  justify-content: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--color-gray-darker);
+}
+
+.descricao-do-produto {
+  grid-area: descricao;
+  padding-right: 20px;
+}
+
+.descricao-do-produto h3 {
+  font-size: 1.8rem;
+  color: var(--color-title);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.descricao-do-produto p {
+  font-size: 1.3rem;
+  text-align: left;
+  line-height: 1.3;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.descricao-do-produto .botao-adicionar {
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.descricao-do-produto .botao-adicionar a {
+  padding: 5px 6px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-text-button);
+  background: var(--color-red);
+  border-radius: 5px;
+}
+
+.descricao-do-produto .botao-adicionar span {
+  margin-left: 5px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--color-green);
+}
+
+.imagem-do-produto {
+  overflow: hidden;
+  grid-area: imagem;
+  text-align: end;
+}
+
+.imagem-do-produto img {
+  max-width: 180px;
+  cursor: pointer;
+  border-radius: 5px;
+}
