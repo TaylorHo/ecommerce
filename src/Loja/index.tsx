@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CategorySelector from '../components/CategorySelector';
-import ProductCategory from '../components/ProductCategory';
+import ProductCategory, {produtos} from '../components/ProductCategory';
 
 import './styles.css';
 
@@ -19,6 +19,12 @@ function Loja(){
     }
   }
 
+  var padding_top = produtos * 202.6;
+
+  const paddingTop = {
+    paddingTop: padding_top - 240,
+  }
+
   return(
     <>
       <header>
@@ -29,7 +35,7 @@ function Loja(){
 
       <main>
 
-        <div className="pagina">
+        <div id="pagina" className="pagina" style={paddingTop}>
           <CategorySelector />
 
           <div className="produtos">

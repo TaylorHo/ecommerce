@@ -1,17 +1,16 @@
 .item {
   width: 100%;
   display: grid;
-  grid-template-columns: 2fr 1.75fr;
+  grid-template-columns: 2fr 1.8fr;
   grid-template-areas: "descricao imagem";
-  align-content: center;
-  justify-content: center;
   padding-bottom: 30px;
   border-bottom: 1px solid var(--color-gray-darker);
+  margin-bottom: 20px;
 }
 
 .descricao-do-produto {
   grid-area: descricao;
-  padding-right: 20px;
+  padding-right: 10px;
 }
 
 .descricao-do-produto h3 {
@@ -57,10 +56,19 @@
   overflow: hidden;
   grid-area: imagem;
   text-align: end;
+  padding-top: 20px;
 }
 
 .imagem-do-produto img {
+  width: 100%;
+  height: auto;
   max-width: 180px;
   cursor: pointer;
   border-radius: 5px;
+}
+
+@media (min-width: 400px){
+  .imagem-do-produto {
+    padding-top: 0;
+  }
 }
