@@ -1,85 +1,190 @@
 /* CABEÇALHO - INÍCIO */
 
 header {
-    height: 100px;
-    width: 100%;
-    padding: 16px;
-    position: absolute;
-    top: 0;
-    background-color: var(--color-banner);
-    text-align: center;
-  }
-  
-  header img {
-    max-width: 200px;
-  }
-  
-  /* CABEÇALHO - FIM */
-  
-  .pagina {
-    width: 90%;
-    margin: 80px 5%;
-  }
+  height: 100px;
+  width: 100%;
+  padding: 16px;
+  position: absolute;
+  top: 0;
+  background-color: var(--color-banner);
+  text-align: center;
+}
 
-  .produtos {
-    padding: 0 1px;
-  }
+header img {
+  max-width: 200px;
+}
 
-  /* RESUMO DO PEDIDO - INÍCIO */
-  
-  main {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-  }
-  
-  main .resumo-do-pedido {
-    position: fixed;
-    bottom: 0;
-    width:100%;
-  }
-  
-  main .resumo-do-pedido .topo-do-pedido {
-    background-color: var(--color-red);
-    height: 56px;
-    color: var(--color-text-button);
-    border: unset;
-    font-size: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-content: center;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  main .resumo-do-pedido .topo-do-pedido .counter {
-    background-color: var(--color-text-button);
-    color: var(--color-red);
-    border-radius: 2.4rem;
-    width: 3rem;
-    height: 2.2rem;
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-left: 35%;
-    margin-top: 2rem;
-  }
-  
-  main .resumo-do-pedido .topo-do-pedido .titulo {
-    margin-top: 1.5rem;
-  }
-  
-  main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
-    font-size: 6rem;
-  }
-  
-  main .resumo-do-pedido .inactive {
-    display: none;
-  }
-  
-  main .resumo-do-pedido .active {
-    display: block;
-    background-color: var(--color-background);
-    height: calc(100vh - 56px);
-  }
-  
-  /* RESUMO DO PEDIDO - FIM */
+/* CABEÇALHO - FIM */
+
+.pagina {
+  width: 90%;
+  margin: 80px 5%;
+}
+
+.produtos {
+  padding: 0 1px;
+}
+
+/* RESUMO DO PEDIDO - INÍCIO */
+
+main {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+
+main .resumo-do-pedido {
+  position: fixed;
+  bottom: 0;
+  width:100%;
+}
+
+main .resumo-do-pedido .topo-do-pedido {
+  background-color: var(--color-red);
+  height: 56px;
+  color: var(--color-text-button);
+  border: unset;
+  font-size: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+main .resumo-do-pedido .topo-do-pedido .counter {
+  background-color: var(--color-text-button);
+  color: var(--color-red);
+  border-radius: 2.4rem;
+  width: 3rem;
+  height: 2.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-left: 35%;
+  margin-top: 2rem;
+}
+
+main .resumo-do-pedido .topo-do-pedido .titulo {
+  margin-top: 1.5rem;
+}
+
+main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
+  font-size: 6rem;
+}
+
+.inactive {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+main .resumo-do-pedido .active {
+  background-color: var(--color-background);
+  height: calc(100vh - 56px);
+}
+
+/* RESUMO DO PEDIDO - FIM */
+/* RESUMO DO PEDIDO PARTE DE DENTRO - INÍCIO */
+
+.detalhes-do-pedido {
+  font-size: 1.6rem;
+  background: var(--color-gray-lighter);
+  height: 100%;
+}
+
+.detalhes-do-pedido .msg-do-carrinho {
+  padding: 15px;
+  border-bottom: 1px solid var(--color-gray-border);
+  overflow: hidden;
+  text-align: center;
+}
+
+.detalhes-do-pedido .nota-do-pedido {
+  padding: 15px;
+  border-bottom: 1px solid var(--color-gray-border);
+  overflow: hidden;
+}
+
+.detalhes-do-pedido .nota-do-pedido .dados {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  line-height: 2em;
+}
+
+.detalhes-do-pedido .nota-do-pedido .dados .dados-txt {
+  text-align: left;
+}
+
+.detalhes-do-pedido .nota-do-pedido .dados .dados-val {
+  text-align: right;
+  color: var(--color-title);
+}
+
+.detalhes-do-pedido .nota-do-pedido .total {
+  font-size: 1.8rem;
+  color: var(--color-title);
+  font-weight: 700;
+}
+
+.detalhes-do-pedido .detalhes {
+  padding: 15px;
+  line-height: 2em;
+}
+
+.detalhes-do-pedido .detalhes .title {
+  font-size: 1.8rem;
+  color: var(--color-title);
+  font-weight: 700;
+}
+
+.detalhes-do-pedido .detalhes .msg-dos-detalhes {
+  line-height: 1.6em;
+  padding: 10px 0;
+}
+
+.detalhes-do-pedido .detalhes .endereco {
+  display: flex;
+  padding: 5px 0;
+  justify-content: center;
+  color: var(--color-red);
+  font-size: 1.4rem;
+}
+
+.detalhes-do-pedido .detalhes .endereco i {
+  font-size: 2rem;
+}
+
+.detalhes-do-pedido .detalhes .endereco a {
+  text-decoration: none;
+  color: var(--color-red);
+  margin-top: -3px;
+}
+
+.detalhes-do-pedido .detalhes .metodo-de-pagamento {
+  padding: 15px 0;
+}
+
+.detalhes-do-pedido .fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  background: var(--color-gray-medium);
+  width: 100%;
+  height: 85px;
+  border-top: 1px solid var(--color-gray-darker);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detalhes-do-pedido .fixed-bottom a {
+  background: var(--color-red);
+  text-decoration: none;
+  color: var(--color-text-button);
+  width: 80%;
+  padding: 12px 4px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+/* RESUMO DO PEDIDO PARTE DE DENTRO - FIM */

@@ -13,6 +13,7 @@
   --color-gray-lighter: #f9f9f9;
   --color-gray-border: #ededed;
   --color-gray-darker: #dcdcdc;
+  --color-gray-medium: #f5f3f4;
 
 }
 
@@ -20,6 +21,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 html, body, #root {
@@ -39,7 +41,6 @@ body {
 body, input, button, textarea {
   font: 500 1.6rem Poppins;
   color: var(--color-text);
-  -webkit-font-smoothing: antialiased !important;
 }
 
 .container {
