@@ -19,10 +19,8 @@ function Loja(){
     }
   }
 
-  var padding_top = produtos * 202.6;
-
   const paddingTop = {
-    paddingTop: padding_top - 240,
+    paddingTop: (produtos * 202.6) - 240,
   }
 
   return(

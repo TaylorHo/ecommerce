@@ -3,7 +3,7 @@ import Product from '../Product';
 
 import './styles.css';
 
-export var produtos = 10;
+export var produtos = 20;
 
 function ProductCategory(){
   return(
@@ -11,6 +11,16 @@ function ProductCategory(){
       <div className="categoria">
         <h2>Categoria</h2>
       </div>
+      <Product />
+      <Product />
+      <Product />
+      <Product />
+      <Product />
+      <Product />
+      <Product />
+      <Product />
+      <Product />
+      <Product />
       <Product />
       <Product />
       <Product />

@@ -21,6 +21,10 @@ header {
     margin: 80px 5%;
   }
 
+  .produtos {
+    padding: 0 1px;
+  }
+
   /* RESUMO DO PEDIDO - INÍCIO */
   
   main {
