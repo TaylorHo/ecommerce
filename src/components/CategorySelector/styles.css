@@ -1,6 +1,7 @@
 .separador-topo {
     height: 20px;
-    width: 100%;
+    width: 111%;
+    margin-left: -5.5%;
     background: var(--color-background);
     position: sticky;
     top: -5px;

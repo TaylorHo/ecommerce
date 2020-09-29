@@ -122,7 +122,7 @@ function Loja(){
                         <option value="debito">Cartão de Débito</option>
                       </select>
                       <div className={`troco ${troco}`}>
-                        <input type="text" placeholder="Troco para"/>
+                        <input type="number" placeholder="Troco para"/>
                       </div>
                     </div>
                   </div>

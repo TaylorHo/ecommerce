@@ -73,6 +73,28 @@
   border-radius: 5px;
 }
 
+/* PopUp */
+
+.product-popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-gray-lighter);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dados-do-popup-do-produto {
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: 30px;
+  height: 100%;
+}
+
 @media (min-width: 400px){
   .imagem-do-produto {
     padding-top: 0;
