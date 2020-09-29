@@ -32,7 +32,9 @@ function Product(){
 
       <div className={`product-popup ${productPopup}`}>
         <div className="dados-do-popup-do-produto">
-          <i onClick={productPopupInactive} className="material-icons">clear</i>
+          <div className="fechar-popup">
+            <i onClick={productPopupInactive} className="material-icons">clear</i>
+          </div>
         </div>
       </div>
     </div>
