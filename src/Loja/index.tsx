@@ -7,8 +7,10 @@ import './styles.css';
 
 function Loja(){
 
+  const [envio, setEnvio] = useState('');
   const [pagamento, setPagamento] = useState('');
   const [troco, setTroco] = useState('inactive');
+  const [entrega, setEntrega] = useState('inactive');
   
   const [classe, setClasse] = useState('inactive');
   const [icone, setIcone] = useState('up');
@@ -20,6 +22,15 @@ function Loja(){
     } else if (classe === 'active') {
       setClasse('inactive');
       setIcone('up');
+    }
+  }
+
+  function metodoDeEnvio(n: string){
+    setEnvio(n);
+    if (n === 'receber'){
+      setEntrega('active');
+    } else {
+      setEntrega('inactive');
     }
   }
 
@@ -92,22 +103,28 @@ function Loja(){
                 <div className="title">
                   <span>Detalhes do Pedido</span>
                 </div>
-                <div className="msg-dos-detalhes">
-                  <span>Pedido não iniciado. Adicione um produto para iniciar.</span>
-                </div>
-                <div className="endereco">
-                  <i className="material-icons">create</i>
-                  <a href="#">&nbsp;Editar Endereço</a>
-                </div>
-                <div className="metodo-de-pagamento">
-                  <select value={pagamento} name="metodos-de-pagamento" onChange={(e) => metodoDePagamento(e.target.value)}>
-                    <option value="" disabled hidden >Método de Pagamento</option>
-                    <option value="dinheiro">Dinheiro</option>
-                    <option value="credito">Cartão de Crédito</option>
-                    <option value="debito">Cartão de Débito</option>
+                <div className="metodo-de-envio">
+                  <select value={envio} name="retirar-ou-receber" onChange={(e) => metodoDeEnvio(e.target.value)}>
+                    <option value="" disabled hidden >Retirar ou Receber?</option>
+                    <option value="retirar">Retirar Pessoalmente</option>
+                    <option value="receber">Receber por Delivery</option>
                   </select>
-                  <div className={`troco ${troco}`}>
-                    <input type="text" placeholder="Troco para"/>
+                  <div className={entrega}>
+                    <div className="endereco">
+                      <i className="material-icons">create</i>
+                      <a href="#">&nbsp;Editar Endereço</a>
+                    </div>
+                    <div className="metodo-de-pagamento">
+                      <select value={pagamento} name="metodos-de-pagamento" onChange={(e) => metodoDePagamento(e.target.value)}>
+                        <option value="" disabled hidden >Método de Pagamento</option>
+                        <option value="dinheiro">Dinheiro</option>
+                        <option value="credito">Cartão de Crédito</option>
+                        <option value="debito">Cartão de Débito</option>
+                      </select>
+                      <div className={`troco ${troco}`}>
+                        <input type="text" placeholder="Troco para"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

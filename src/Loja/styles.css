@@ -137,14 +137,9 @@ main .resumo-do-pedido .active {
   font-weight: 700;
 }
 
-.detalhes-do-pedido .detalhes .msg-dos-detalhes {
-  line-height: 1.6em;
-  padding: 10px 0;
-}
-
 .detalhes-do-pedido .detalhes .endereco {
   display: flex;
-  padding: 5px 0;
+  padding-top: 15px;
   justify-content: center;
   color: var(--color-red);
   font-size: 1.4rem;
@@ -158,6 +153,10 @@ main .resumo-do-pedido .active {
   text-decoration: none;
   color: var(--color-red);
   margin-top: -3px;
+}
+
+.detalhes-do-pedido .detalhes .metodo-de-envio {
+  padding-top: 15px;
 }
 
 .detalhes-do-pedido .detalhes .metodo-de-pagamento {
