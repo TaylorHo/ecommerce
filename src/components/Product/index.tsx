@@ -10,7 +10,7 @@ function Product(){
         <h3>Xis Coração</h3>
         <p>Pão de xis, Coração, Ovo, Queijo Lanche, Milho, Ervilha, Alface, Tomate, Maionese, Ketchup e Mostarda.</p>
         <div className="botao-adicionar">
-          <a href="#">Adicionar</a>
+          <a href="#"><i className="material-icons">add_shopping_cart</i> Adicionar</a>
           <span>R$19,90</span>
         </div>
       </div>

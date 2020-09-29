@@ -29,10 +29,16 @@
 }
 
 .descricao-do-produto .botao-adicionar {
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   text-align: left;
-  margin-top: 10px;
+  margin-top: 2px;
+  justify-content: center;
+}
+
+.descricao-do-produto .botao-adicionar i {
+  font-size: 16px;
 }
 
 .descricao-do-produto .botao-adicionar a {
