@@ -1,6 +1,6 @@
 {
   "homepage": "http://taylorho.github.io/ecommerce/",
-  "name": "criestore",
+  "name": "ecommerce",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
