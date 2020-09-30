@@ -5,7 +5,7 @@ import './styles.css';
 function Product(){
 
   const [productPopup, setProductPopup] = useState('inactive');
-  const [quantidade, setQuantidade] = useState(0);
+  const [quantidade, setQuantidade] = useState(1);
 
   function aumentaQuantidade(){
     var quant = quantidade + 1;
@@ -67,7 +67,7 @@ function Product(){
               <i onClick={aumentaQuantidade} className="material-icons">add</i>
             </div>
             <div className="adicionar">
-              <a onClick={productPopupActive}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+              <a onClick={aumentaQuantidade}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
             </div>
           </div>
         </div>
