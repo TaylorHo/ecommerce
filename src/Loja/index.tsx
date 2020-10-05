@@ -14,6 +14,7 @@ function Loja(){
   const [pagamento, setPagamento] = useState('');
   const [troco, setTroco] = useState('inactive');
   const [entrega, setEntrega] = useState('inactive');
+  const [counter, setCounter] = useState(0);
   
   const [classe, setClasse] = useState('inactive');
   const [icone, setIcone] = useState('up');
@@ -22,9 +23,19 @@ function Loja(){
     if (classe === 'inactive') {
       setClasse('active');
       setIcone('down');
+      configProducts();
     } else if (classe === 'active') {
       setClasse('inactive');
       setIcone('up');
+    }
+  }
+
+  function configProducts(){
+    if (localStorage.getItem('carrinho')){
+      var carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+      for (var i = 0; i < carrinho.length; i++){
+        setCounter(counter + carrinho[i].quant);
+      }
     }
   }
 
@@ -71,7 +82,7 @@ function Loja(){
         <div className="resumo-do-pedido">
           <div className="topo-do-pedido" onClick={resumoPedido}>
             <div className="counter">
-              0
+              {counter}
             </div>
             <div className="titulo">
               Resumo do Pedido

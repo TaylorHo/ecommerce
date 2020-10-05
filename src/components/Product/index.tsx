@@ -42,7 +42,7 @@ const Product: React.FC<productAll> = ({data}) => {
 
   function adicionaProduto(){
     var carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
-    carrinho.push({id: data.id, quant: quantidade});
+    carrinho.push({prod: data.titulo, quant: quantidade});
     localStorage.setItem("carrinho", JSON.stringify(carrinho));
   }
 
