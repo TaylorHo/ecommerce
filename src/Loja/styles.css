@@ -85,6 +85,19 @@ main .resumo-do-pedido .active {
   height: calc(100vh - 56px);
 }
 
+.categoria {
+  width: 100%;
+  background: var(--color-gray-darker);
+  border-radius: 5px;
+  padding: 5px 0;
+  margin-bottom: 20px;
+}
+
+.categoria h2 {
+  font-size: 1.8rem;
+  color: var(--color-title);
+}
+
 /* RESUMO DO PEDIDO - FIM */
 /* RESUMO DO PEDIDO PARTE DE DENTRO - INÍCIO */
 

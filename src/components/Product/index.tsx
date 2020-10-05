@@ -2,7 +2,20 @@ import React, { useState } from 'react';
 
 import './styles.css';
 
-function Product(){
+export interface productProps {
+  id: number;
+  titulo: string;
+  foto: string;
+  preco: string;
+  detalhes: string;
+  categoria: string;
+}
+
+interface productAll {
+  data: productProps;
+}
+
+const Product: React.FC<productAll> = ({data}) => {
 
   const [productPopup, setProductPopup] = useState('inactive');
   const [quantidade, setQuantidade] = useState(1);
@@ -31,16 +44,16 @@ function Product(){
     <div className="item">
 
       <div className="descricao-do-produto">
-        <h3>Xis Coração</h3>
-        <p>Pão de xis, Coração, Ovo, Queijo Lanche, Milho, Ervilha, Alface, Tomate, Maionese, Ketchup e Mostarda.</p>
+        <h3>{data.titulo}</h3>
+        <p>{data.detalhes}</p>
         <div className="botao-adicionar">
           <a onClick={productPopupActive}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
-          <span>R$19,90</span>
+          <span>R${data.preco}</span>
         </div>
       </div>
 
       <div className="imagem-do-produto">
-        <img src="https://www.criestore.com.br/wp-content/uploads/2020/09/704d7202-9993-4882-a9e4-a2921097864b.jpeg"/>
+        <img src={data.foto}/>
       </div>
 
       <div className={`product-popup ${productPopup}`}>
@@ -49,12 +62,12 @@ function Product(){
             <i onClick={productPopupInactive} className="material-icons">clear</i>
           </div>
           <div className="conteudo-do-popup-do-produto">
-            <h3 className="title">Xis Coração</h3>
+            <h3 className="title">{data.titulo}</h3>
             <div className="imagem-do-popup">
-              <img src="https://www.criestore.com.br/wp-content/uploads/2020/09/704d7202-9993-4882-a9e4-a2921097864b.jpeg"/>
+              <img src={data.foto}/>
             </div>
             <div className="descricao-do-produto">
-              <p>Pão de xis, Coração, Ovo, Queijo Lanche, Milho, Ervilha, Alface, Tomate, Maionese, Ketchup e Mostarda.</p>
+              <p>{data.detalhes}</p>
             </div>
             <div className="observacoes">
               <input type="text" name="observacoes" placeholder="Observação..."/>

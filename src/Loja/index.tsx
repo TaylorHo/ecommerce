@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import CategorySelector from '../components/CategorySelector';
-import ProductCategory, {produtos} from '../components/ProductCategory';
 import Whatsapp from '../assets/img/icons/whatsapp.svg';
+import { ProductsList } from '../services/api';
+import Product, {productProps} from '../components/Product';
 
 import './styles.css';
 
@@ -44,24 +45,24 @@ function Loja(){
   }
 
   const paddingTop = {
-    paddingTop: (produtos * 204) - 240,
+    paddingTop: (9 * 204) - 240,
   }
 
-  return(
-    <>
-      <header>
-        <div>
-          <img src="https://www.criestore.com.br/wp-content/uploads/2020/09/Logo_Branco_Site-300x88.png"/>
-        </div>
-      </header>
+  const data = ProductsList();
 
+  return(
       <main>
 
         <div id="pagina" className="pagina" style={paddingTop}>
           <CategorySelector />
 
           <div className="produtos">
-            <ProductCategory />
+            <div className="categoria">
+            <h2>Categoria</h2>
+            </div>
+            {data.map((produto: productProps) => {
+              return <Product key={produto.id} data={produto} />
+            })}
           </div>
         </div>
 
@@ -138,7 +139,6 @@ function Loja(){
         </div>
 
       </main>
-    </>
   )
 }
 
