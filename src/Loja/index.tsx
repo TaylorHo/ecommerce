@@ -8,6 +8,8 @@ import './styles.css';
 
 function Loja(){
 
+  localStorage.clear();
+
   const [envio, setEnvio] = useState('');
   const [pagamento, setPagamento] = useState('');
   const [troco, setTroco] = useState('inactive');

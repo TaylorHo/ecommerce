@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './styles.css';
 
 export interface productProps {
-  id: number;
+  id: string;
   titulo: string;
   foto: string;
   preco: string;
@@ -38,6 +38,12 @@ const Product: React.FC<productAll> = ({data}) => {
 
   function productPopupInactive(){
     setProductPopup('inactive');
+  }
+
+  function adicionaProduto(){
+    var carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+    carrinho.push({id: data.id, quant: quantidade});
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
   }
 
   return (
@@ -80,7 +86,7 @@ const Product: React.FC<productAll> = ({data}) => {
               <i onClick={aumentaQuantidade} className="material-icons">add</i>
             </div>
             <div className="adicionar">
-              <a onClick={aumentaQuantidade}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+              <a onClick={adicionaProduto}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
             </div>
           </div>
         </div>
