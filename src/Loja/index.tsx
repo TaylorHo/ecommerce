@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import CategorySelector from '../components/CategorySelector';
 import Whatsapp from '../assets/img/icons/whatsapp.svg';
 import { ProductsList } from '../services/api';
-import Product, {productProps} from '../components/Product';
 
 import './styles.css';
 
-function Loja(){
+interface productProps {
+  id: string;
+  titulo: string;
+  foto: string;
+  preco: string;
+  detalhes: string;
+  categoria: string;
+}
 
-  localStorage.clear();
+function Loja(){
 
   const [envio, setEnvio] = useState('');
   const [pagamento, setPagamento] = useState('');
@@ -19,11 +24,37 @@ function Loja(){
   const [classe, setClasse] = useState('inactive');
   const [icone, setIcone] = useState('up');
 
+  const [productPopup, setProductPopup] = useState('inactive');
+  const [quantidade, setQuantidade] = useState(1);
+
+  const [category, setCategory] = useState('');
+
+  function aumentaQuantidade(){
+    var quant = quantidade + 1;
+    setQuantidade(quant);
+  }
+
+  function diminuiQuantidade(){
+    if (quantidade !== 0){
+      var quant = quantidade - 1;
+      setQuantidade(quant);
+    }
+  }
+
+  function productPopupActivator() {
+    (productPopup === 'active' ? setProductPopup('inactive') : setProductPopup('active'))
+  }
+
+  function adicionaProduto(){
+    configProducts();
+    setQuantidade(1);
+    setProductPopup('inactive');
+  }
+
   function resumoPedido() {
     if (classe === 'inactive') {
       setClasse('active');
       setIcone('down');
-      configProducts();
     } else if (classe === 'active') {
       setClasse('inactive');
       setIcone('up');
@@ -31,12 +62,7 @@ function Loja(){
   }
 
   function configProducts(){
-    if (localStorage.getItem('carrinho')){
-      var carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
-      for (var i = 0; i < carrinho.length; i++){
-        setCounter(counter + carrinho[i].quant);
-      }
-    }
+    setCounter(counter + quantidade);
   }
 
   function metodoDeEnvio(n: string){
@@ -67,14 +93,69 @@ function Loja(){
       <main>
 
         <div id="pagina" className="pagina" style={paddingTop}>
-          <CategorySelector />
+        <div className="separador-topo"></div>
+          <div className="select-block">
+              <select value={category} name="categorias" onChange={(e) => { setCategory(e.target.value) }}>
+                  <option value="" disabled hidden >Categoria</option>
+                  <option value="categoria-01">Categoria 01</option>
+                  <option value="categoria-02">Categoria 02</option>
+                  <option value="categoria-03">Categoria 03</option>
+                  <option value="categoria-04">Categoria 04</option>
+                  <option value="categoria-05">Categoria 05</option>
+              </select>
+          </div>
 
           <div className="produtos">
             <div className="categoria">
             <h2>Categoria</h2>
             </div>
             {data.map((produto: productProps) => {
-              return <Product key={produto.id} data={produto} />
+              return (
+                <div className="item" key={produto.id}>
+                  <div className="descricao-do-produto">
+                    <h3>{produto.titulo}</h3>
+                    <p>{produto.detalhes}</p>
+                    <div className="botao-adicionar">
+                      <a onClick={productPopupActivator}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                      <span>R${produto.preco}</span>
+                    </div>
+                  </div>
+
+                  <div className="imagem-do-produto">
+                    <img src={produto.foto}/>
+                  </div>
+
+                  <div className={`product-popup ${productPopup}`}>
+                    <div className="dados-do-popup-do-produto">
+                      <div className="fechar-popup">
+                        <i onClick={productPopupActivator} className="material-icons">clear</i>
+                      </div>
+                      <div className="conteudo-do-popup-do-produto">
+                        <h3 className="title">{produto.titulo}</h3>
+                        <div className="imagem-do-popup">
+                          <img src={produto.foto}/>
+                        </div>
+                        <div className="descricao-do-produto">
+                          <p>{produto.detalhes}</p>
+                        </div>
+                        <div className="observacoes">
+                          <input type="text" name="observacoes" placeholder="Observação..."/>
+                        </div>
+                      </div>
+                      <div className="adicionar-produto-ao-carrinho">
+                        <div className="quantidade">
+                          <i onClick={diminuiQuantidade} className="material-icons">remove</i>
+                          <input type="text" value={quantidade} readOnly/>
+                          <i onClick={aumentaQuantidade} className="material-icons">add</i>
+                        </div>
+                        <div className="adicionar">
+                          <a onClick={adicionaProduto}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
             })}
           </div>
         </div>
