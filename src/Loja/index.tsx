@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Whatsapp from '../assets/img/icons/whatsapp.svg';
-import { ProductsList } from '../services/api';
 
 import './styles.css';
 
@@ -14,6 +13,8 @@ interface productProps {
 }
 
 function Loja(){
+
+  const [productsArray, setProductsArray] = useState([]);
 
   const [envio, setEnvio] = useState('');
   const [pagamento, setPagamento] = useState('');
@@ -29,6 +30,14 @@ function Loja(){
 
   const [category, setCategory] = useState('');
 
+  function recebeProdutos(){
+    fetch("https://indecisos.space/api/")
+    .then((response) => response.json())
+    .then((responseJSON) => {
+      setProductsArray(responseJSON)
+    });
+  }
+
   function aumentaQuantidade(){
     var quant = quantidade + 1;
     setQuantidade(quant);
@@ -41,8 +50,22 @@ function Loja(){
     }
   }
 
-  function productPopupActivator() {
-    (productPopup === 'active' ? setProductPopup('inactive') : setProductPopup('active'))
+  function productPopupActivator(id: String) {
+    var produtoPop = 'produto-' + id;
+    var e = document.getElementById(produtoPop);
+    if(e){
+      e.classList.remove('inactive');
+      e.classList.add('active');
+    }
+  }
+
+  function productPopupDeactivator(id: String){
+    var produtoPop = 'produto-' + id;
+    var e = document.getElementById(produtoPop);
+    if(e){
+      e.classList.remove('active');
+      e.classList.add('inactive');
+    }
   }
 
   function adicionaProduto(){
@@ -87,10 +110,8 @@ function Loja(){
     paddingTop: (9 * 204) - 240,
   }
 
-  const data = ProductsList();
-
   return(
-      <main>
+      <main onLoad={recebeProdutos}>
 
         <div id="pagina" className="pagina" style={paddingTop}>
         <div className="separador-topo"></div>
@@ -109,14 +130,14 @@ function Loja(){
             <div className="categoria">
             <h2>Categoria</h2>
             </div>
-            {data.map((produto: productProps) => {
+            {productsArray.map((produto: productProps) => {
               return (
                 <div className="item" key={produto.id}>
                   <div className="descricao-do-produto">
                     <h3>{produto.titulo}</h3>
                     <p>{produto.detalhes}</p>
                     <div className="botao-adicionar">
-                      <a onClick={productPopupActivator}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                      <a onClick={() => productPopupActivator(produto.id)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
                       <span>R${produto.preco}</span>
                     </div>
                   </div>
@@ -125,10 +146,10 @@ function Loja(){
                     <img src={produto.foto}/>
                   </div>
 
-                  <div className={`product-popup ${productPopup}`}>
+                  <div id={`produto-${produto.id}`} className={`product-popup ${productPopup}`}>
                     <div className="dados-do-popup-do-produto">
                       <div className="fechar-popup">
-                        <i onClick={productPopupActivator} className="material-icons">clear</i>
+                        <i onClick={() => productPopupDeactivator(produto.id)} className="material-icons">clear</i>
                       </div>
                       <div className="conteudo-do-popup-do-produto">
                         <h3 className="title">{produto.titulo}</h3>
