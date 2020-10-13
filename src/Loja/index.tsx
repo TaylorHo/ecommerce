@@ -15,19 +15,33 @@ interface productProps {
 function Loja(){
 
   const [productsArray, setProductsArray] = useState([]);
+  const [cartArray, setCartArray] = useState([{id: '0', quant: 0}]);
 
   const [envio, setEnvio] = useState('');
   const [pagamento, setPagamento] = useState('');
   const [troco, setTroco] = useState('inactive');
   const [entrega, setEntrega] = useState('inactive');
   const [counter, setCounter] = useState(0);
-  
   const [classe, setClasse] = useState('inactive');
   const [icone, setIcone] = useState('up');
-
   const [quantidade, setQuantidade] = useState(1);
-
   const [category, setCategory] = useState('');
+
+  function carrinho(id: string, quantidade: number){
+    if(cartArray[0].id === '0'){
+      setCartArray([
+        {id: id, quant: quantidade}
+      ]);
+    } else if (cartArray[0].id !== '0'){
+      setCartArray([
+        ...cartArray,
+        {id: id, quant: quantidade}
+      ]);
+    }
+    configProducts();
+    setQuantidade(1);
+    productPopupDeactivator(id);
+  }
 
   var jaExecutada = false;
   function recebeProdutos(){
@@ -69,12 +83,6 @@ function Loja(){
       e.classList.remove('active');
       e.classList.add('inactive');
     }
-  }
-
-  function adicionaProduto(id: String){
-    configProducts();
-    setQuantidade(1);
-    productPopupDeactivator(id);
   }
 
   function resumoPedido() {
@@ -173,7 +181,7 @@ function Loja(){
                           <i onClick={aumentaQuantidade} className="material-icons">add</i>
                         </div>
                         <div className="adicionar">
-                          <a onClick={() => adicionaProduto(produto.id)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                          <a onClick={() => carrinho(produto.id, quantidade)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
                         </div>
                       </div>
                     </div>
