@@ -25,7 +25,6 @@ function Loja(){
   const [classe, setClasse] = useState('inactive');
   const [icone, setIcone] = useState('up');
 
-  const [productPopup, setProductPopup] = useState('inactive');
   const [quantidade, setQuantidade] = useState(1);
 
   const [category, setCategory] = useState('');
@@ -68,10 +67,10 @@ function Loja(){
     }
   }
 
-  function adicionaProduto(){
+  function adicionaProduto(id: String){
     configProducts();
     setQuantidade(1);
-    setProductPopup('inactive');
+    productPopupDeactivator(id);
   }
 
   function resumoPedido() {
@@ -146,7 +145,7 @@ function Loja(){
                     <img src={produto.foto}/>
                   </div>
 
-                  <div id={`produto-${produto.id}`} className={`product-popup ${productPopup}`}>
+                  <div id={`produto-${produto.id}`} className="product-popup inactive">
                     <div className="dados-do-popup-do-produto">
                       <div className="fechar-popup">
                         <i onClick={() => productPopupDeactivator(produto.id)} className="material-icons">clear</i>
@@ -170,7 +169,7 @@ function Loja(){
                           <i onClick={aumentaQuantidade} className="material-icons">add</i>
                         </div>
                         <div className="adicionar">
-                          <a onClick={adicionaProduto}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                          <a onClick={() => adicionaProduto(produto.id)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
                         </div>
                       </div>
                     </div>

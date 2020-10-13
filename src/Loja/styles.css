@@ -378,7 +378,6 @@ main .resumo-do-pedido .active {
 }
 
 .adicionar {
-  width: calc(100% -30px);
   margin-left: 30px;
   margin-right: 30px;
   display: flex;
