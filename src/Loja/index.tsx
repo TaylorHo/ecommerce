@@ -27,7 +27,7 @@ function Loja(){
   const [quantidade, setQuantidade] = useState(1);
   const [category, setCategory] = useState('');
 
-  function carrinho(id: string, quantidade: number){
+  function addToCart(id: string, quantidade: number){
     if(cartArray[0].id === '0'){
       setCartArray([
         {id: id, quant: quantidade}
@@ -38,84 +38,69 @@ function Loja(){
         {id: id, quant: quantidade}
       ]);
     }
-    configProducts();
-    setQuantidade(1);
-    productPopupDeactivator(id);
+    setCounter(counter + quantidade);
+    toggleProductPopup(id, 0);
   }
 
-  var jaExecutada = false;
+  // ================================================================== //
+  // Recebe a listagem de produtos da API
   function recebeProdutos(){
-    if(jaExecutada === false){
+    if(productsArray.length === 0){
       fetch("https://indecisos.space/api/")
       .then((response) => response.json())
       .then((responseJSON) => {
         setProductsArray(responseJSON)
       });
     }
-    jaExecutada = true;
   }
+  // ================================================================== //
 
+  // ================================================================== //
+  // Aumenta e diminui a quantidade de produtos para adicionar ao carrinho
+  // Fica no PopUp do produto
   function aumentaQuantidade(){
     var quant = quantidade + 1;
     setQuantidade(quant);
   }
-
   function diminuiQuantidade(){
     if (quantidade !== 0){
       var quant = quantidade - 1;
       setQuantidade(quant);
     }
   }
+  // ================================================================== //
 
-  function productPopupActivator(id: String) {
+  // ================================================================== //
+  // Ativa e desativa o PopUp do produto, apenas do ID específico
+  function toggleProductPopup(id: String, n: number){
     var produtoPop = 'produto-' + id;
     var e = document.getElementById(produtoPop);
-    if(e){
-      e.classList.remove('inactive');
-      e.classList.add('active');
-    }
+    if(e){(n===1 ? e.classList.remove('inactive') : e.classList.add('inactive'))}
+    setQuantidade(1);
   }
+  // 1 = ativa o popup
+  // 0 = desativa o popup
+  // ================================================================== //
 
-  function productPopupDeactivator(id: String){
-    var produtoPop = 'produto-' + id;
-    var e = document.getElementById(produtoPop);
-    if(e){
-      e.classList.remove('active');
-      e.classList.add('inactive');
-    }
-  }
-
+  // ================================================================== //
+  // Ativa e desativa a barra inferior que mostra o RESUMO DO PEDIDO
   function resumoPedido() {
-    if (classe === 'inactive') {
-      setClasse('active');
-      setIcone('down');
-    } else if (classe === 'active') {
-      setClasse('inactive');
-      setIcone('up');
-    }
+    (classe==='inactive' ? setClasse('active') : setClasse('inactive'));
+    (classe==='inactive' ? setIcone('down') : setIcone('up'));
   }
+  // ================================================================== //
 
-  function configProducts(){
-    setCounter(counter + quantidade);
-  }
-
+  // ================================================================== //
+  // Define os métodos de envio e pagamento, de acordo com a necessidade de aparição
   function metodoDeEnvio(n: string){
     setEnvio(n);
-    if (n === 'receber'){
-      setEntrega('active');
-    } else {
-      setEntrega('inactive');
-    }
+    (n==='receber' ? setEntrega('active') : setEntrega('inactive'));
   }
-
   function metodoDePagamento(n: string){
     setPagamento(n);
-    if (n === 'dinheiro'){
-      setTroco('active');
-    } else {
-      setTroco('inactive');
-    }
+    (n==='dinheiro' ? setTroco('active') : setTroco('inactive'));
   }
+  // ================================================================== //
 
   const paddingTop = {
     paddingTop: (9 * 204) - 240,
@@ -148,7 +133,7 @@ function Loja(){
                     <h3>{produto.titulo}</h3>
                     <p>{produto.detalhes}</p>
                     <div className="botao-adicionar">
-                      <a onClick={() => productPopupActivator(produto.id)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                      <a onClick={() => toggleProductPopup(produto.id, 1)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
                       <span>R${produto.preco}</span>
                     </div>
                   </div>
@@ -160,7 +145,7 @@ function Loja(){
                   <div id={`produto-${produto.id}`} className="product-popup inactive">
                     <div className="dados-do-popup-do-produto">
                       <div className="fechar-popup">
-                        <i onClick={() => productPopupDeactivator(produto.id)} className="material-icons">clear</i>
+                        <i onClick={() => toggleProductPopup(produto.id, 0)} className="material-icons">clear</i>
                       </div>
                       <div className="conteudo-do-popup-do-produto">
                         <h3 className="title">{produto.titulo}</h3>
@@ -181,7 +166,7 @@ function Loja(){
                           <i onClick={aumentaQuantidade} className="material-icons">add</i>
                         </div>
                         <div className="adicionar">
-                          <a onClick={() => carrinho(produto.id, quantidade)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                          <a onClick={() => addToCart(produto.id, quantidade)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
                         </div>
                       </div>
                     </div>
