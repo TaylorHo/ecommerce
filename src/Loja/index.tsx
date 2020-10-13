@@ -29,12 +29,16 @@ function Loja(){
 
   const [category, setCategory] = useState('');
 
+  var jaExecutada = false;
   function recebeProdutos(){
-    fetch("https://indecisos.space/api/")
-    .then((response) => response.json())
-    .then((responseJSON) => {
-      setProductsArray(responseJSON)
-    });
+    if(jaExecutada === false){
+      fetch("https://indecisos.space/api/")
+      .then((response) => response.json())
+      .then((responseJSON) => {
+        setProductsArray(responseJSON)
+      });
+    }
+    jaExecutada = true;
   }
 
   function aumentaQuantidade(){
@@ -142,7 +146,7 @@ function Loja(){
                   </div>
 
                   <div className="imagem-do-produto">
-                    <img src={produto.foto}/>
+                    <img src={produto.foto} alt="Foto do produto"/>
                   </div>
 
                   <div id={`produto-${produto.id}`} className="product-popup inactive">
@@ -153,7 +157,7 @@ function Loja(){
                       <div className="conteudo-do-popup-do-produto">
                         <h3 className="title">{produto.titulo}</h3>
                         <div className="imagem-do-popup">
-                          <img src={produto.foto}/>
+                          <img src={produto.foto} alt="Foto do produto"/>
                         </div>
                         <div className="descricao-do-produto">
                           <p>{produto.detalhes}</p>
@@ -245,7 +249,7 @@ function Loja(){
               </div>
 
               <div className="fixed-bottom">
-                <a href="#"><img src={Whatsapp} /> Realizar Pedido</a>
+                <a href="#"><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</a>
               </div>
 
             </div>
