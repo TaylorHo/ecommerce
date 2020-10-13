@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/ecommerce/static/css/main.7421d174.chunk.css",
-    "main.js": "/ecommerce/static/js/main.ba192c75.chunk.js",
-    "main.js.map": "/ecommerce/static/js/main.ba192c75.chunk.js.map",
+    "main.js": "/ecommerce/static/js/main.bb2c7f72.chunk.js",
+    "main.js.map": "/ecommerce/static/js/main.bb2c7f72.chunk.js.map",
     "runtime-main.js": "/ecommerce/static/js/runtime-main.ee40b3dc.js",
     "runtime-main.js.map": "/ecommerce/static/js/runtime-main.ee40b3dc.js.map",
-    "static/js/2.13cefdde.chunk.js": "/ecommerce/static/js/2.13cefdde.chunk.js",
-    "static/js/2.13cefdde.chunk.js.map": "/ecommerce/static/js/2.13cefdde.chunk.js.map",
+    "static/js/2.e6877320.chunk.js": "/ecommerce/static/js/2.e6877320.chunk.js",
+    "static/js/2.e6877320.chunk.js.map": "/ecommerce/static/js/2.e6877320.chunk.js.map",
     "index.html": "/ecommerce/index.html",
-    "precache-manifest.06fea6d1142e0f01517278a768ad8f78.js": "/ecommerce/precache-manifest.06fea6d1142e0f01517278a768ad8f78.js",
+    "precache-manifest.4242f94fa18b8665fd7bc63d98382125.js": "/ecommerce/precache-manifest.4242f94fa18b8665fd7bc63d98382125.js",
     "service-worker.js": "/ecommerce/service-worker.js",
     "static/css/main.7421d174.chunk.css.map": "/ecommerce/static/css/main.7421d174.chunk.css.map",
-    "static/js/2.13cefdde.chunk.js.LICENSE.txt": "/ecommerce/static/js/2.13cefdde.chunk.js.LICENSE.txt",
+    "static/js/2.e6877320.chunk.js.LICENSE.txt": "/ecommerce/static/js/2.e6877320.chunk.js.LICENSE.txt",
     "static/media/whatsapp.svg": "/ecommerce/static/media/whatsapp.3c3f5e1e.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.ee40b3dc.js",
-    "static/js/2.13cefdde.chunk.js",
+    "static/js/2.e6877320.chunk.js",
     "static/css/main.7421d174.chunk.css",
-    "static/js/main.ba192c75.chunk.js"
+    "static/js/main.bb2c7f72.chunk.js"
   ]
 }
