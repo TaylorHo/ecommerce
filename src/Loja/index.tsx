@@ -14,8 +14,11 @@ interface productProps {
 
 function Loja(){
 
-  const [productsArray, setProductsArray] = useState([]);
-  const [cartArray, setCartArray] = useState([{id: '0', quant: 0}]);
+  const [productsArray, setProductsArray] = useState([]);            // Produtos do Servidor
+  const [cartArray, setCartArray] = useState([{titulo: '', preco: '', quant: 0}]); // Produtos no carrinho
+
+  const [msg, setMsg] = useState('active');
+  const [listagem, setListagem] = useState('inactive');
 
   const [envio, setEnvio] = useState('');
   const [pagamento, setPagamento] = useState('');
@@ -27,15 +30,17 @@ function Loja(){
   const [quantidade, setQuantidade] = useState(1);
   const [category, setCategory] = useState('');
 
-  function addToCart(id: string, quantidade: number){
-    if(cartArray[0].id === '0'){
+  function addToCart(titulo: string, preco: string, quantidade: number, id: string){
+    if(cartArray[0].quant === 0){
       setCartArray([
-        {id: id, quant: quantidade}
+        {titulo: titulo, preco: preco, quant: quantidade}
       ]);
-    } else if (cartArray[0].id !== '0'){
+      setMsg('inactive');
+      setListagem('active');
+    } else if (cartArray[0].quant !== 0){
       setCartArray([
         ...cartArray,
-        {id: id, quant: quantidade}
+        {titulo: titulo, preco: preco, quant: quantidade}
       ]);
     }
     setCounter(counter + quantidade);
@@ -166,7 +171,7 @@ function Loja(){
                           <i onClick={aumentaQuantidade} className="material-icons">add</i>
                         </div>
                         <div className="adicionar">
-                          <a onClick={() => addToCart(produto.id, quantidade)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                          <a onClick={() => addToCart(produto.titulo, produto.preco, quantidade, produto.id)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
                         </div>
                       </div>
                     </div>
@@ -189,11 +194,22 @@ function Loja(){
               <i className="material-icons">{`keyboard_arrow_${icone}`}</i>
             </div>
           </div>
-          <div className={classe}>
+          <div className={`det ${classe}`}>
             <div className="detalhes-do-pedido">
 
-              <div className="msg-do-carrinho">
-                <span>Carrinho vazio, adicione produtos para iniciar o pedido.</span>
+              <div className={`msg-do-carrinho ${msg}`}>
+                  <span>Carrinho vazio, adicione produtos para iniciar o pedido.</span>
+              </div>
+
+              <div className={`listagem-de-produtos ${listagem}`}>
+                {cartArray.map((produto) => {
+                  return(
+                    <div className="lista" key={produto.titulo}>
+                      <span className="dados-txt">{produto.quant}X {produto.titulo} - </span>&nbsp;
+                      <span className="dados-val">R${produto.preco} </span><i className="material-icons-outlined">delete_forever</i>
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="nota-do-pedido">

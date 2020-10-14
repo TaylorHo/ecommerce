@@ -53,6 +53,8 @@ input {
   padding: 0 1.6rem;
   font: 1.6rem Archivo;
   overflow: hidden;
+  text-align: center;
+  text-align-last: center;
 }
 
 .container {
