@@ -16,7 +16,7 @@ interface productProps {
 function Loja(){
 
   const [productsArray, setProductsArray] = useState([]);            // Produtos do Servidor
-  const [cartArray, setCartArray] = useState([{titulo: '', preco: '', quant: 0}]); // Produtos no carrinho
+  const [cartArray, setCartArray] = useState([{titulo: '', preco: '', quant: 0, obs: '', id: 0, cart: 1}]); // Produtos no carrinho
 
   const [msg, setMsg] = useState('active');
   const [listagem, setListagem] = useState('inactive');
@@ -30,24 +30,50 @@ function Loja(){
   const [icone, setIcone] = useState('up');
   const [quantidade, setQuantidade] = useState(1);
   const [category, setCategory] = useState('');
+  const [observacao, setObservacao] = useState('')
   const [loading, setLoading] = useState(true);
 
-  function addToCart(titulo: string, preco: string, quantidade: number, id: string){
+  // ================================================================== //
+  // Adicionar produtos ao array do carrinho
+  function addToCart(titulo: string, preco: string, quantidade: number, id: string, obs: string){
     if(cartArray[0].quant === 0){
       setCartArray([
-        {titulo: titulo, preco: preco, quant: quantidade}
+        {titulo: titulo, preco: preco, quant: quantidade, obs: obs, id: parseInt(id), cart: 1}
       ]);
       setMsg('inactive');
       setListagem('active');
     } else if (cartArray[0].quant !== 0){
       setCartArray([
         ...cartArray,
-        {titulo: titulo, preco: preco, quant: quantidade}
+        {titulo: titulo, preco: preco, quant: quantidade, obs: obs, id: parseInt(id), cart: 1}
       ]);
     }
+    setObservacao('');
     setCounter(counter + quantidade);
     toggleProductPopup(id, 0);
   }
+  // ================================================================== //
+
+  // ================================================================== //
+  // Remover produtos do array do carrinho
+  function removeFromCart(position: number){
+    const updatedCart = cartArray.map((produto, index) => {
+      if(index === position){
+        setCounter(counter - produto.quant);
+        return {...produto, quant: 0, obs: '', cart: 0}
+      }
+      return produto;
+    });
+    setCartArray(updatedCart);
+    verificaTotalDeProdutos();
+  }
+  function verificaTotalDeProdutos(){
+    if(counter == 1){
+      setMsg('active');
+      setListagem('inactive');
+    }
+  }
+  // ================================================================== //
 
   // ================================================================== //
   // Recebe a listagem de produtos da API
@@ -117,6 +143,11 @@ function Loja(){
   return(
     <>
       <Circle customLoading={loading} />
+      <header>
+        <div>
+          <img src="https://www.criestore.com.br/wp-content/uploads/2020/09/Logo_Branco_Site-300x88.png"/>
+        </div>
+      </header>
       <main onLoad={recebeProdutos}>
 
         <div id="pagina" className="pagina" style={paddingTop}>
@@ -166,7 +197,7 @@ function Loja(){
                           <p>{produto.detalhes}</p>
                         </div>
                         <div className="observacoes">
-                          <input type="text" name="observacoes" placeholder="Observação..."/>
+                          <input type="text" name="observacoes" placeholder="Observação..." value={observacao} onChange={(e) => { setObservacao(e.target.value) }}/>
                         </div>
                       </div>
                       <div className="adicionar-produto-ao-carrinho">
@@ -176,7 +207,7 @@ function Loja(){
                           <i onClick={aumentaQuantidade} className="material-icons">add</i>
                         </div>
                         <div className="adicionar">
-                          <a onClick={() => addToCart(produto.titulo, produto.preco, quantidade, produto.id)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                          <a onClick={() => addToCart(produto.titulo, produto.preco, quantidade, produto.id, observacao)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
                         </div>
                       </div>
                     </div>
@@ -207,13 +238,15 @@ function Loja(){
               </div>
 
               <div className={`listagem-de-produtos ${listagem}`}>
-                {cartArray.map((produto) => {
-                  return(
-                    <div className="lista" key={produto.titulo}>
-                      <span className="dados-txt">{produto.quant}X {produto.titulo} - </span>&nbsp;
-                      <span className="dados-val">R${produto.preco} </span><i className="material-icons-outlined">delete_forever</i>
-                    </div>
-                  );
+                {cartArray.map((produto, index) => {
+                  if (produto.cart === 1){
+                    return(
+                      <div className="lista" key={index}>
+                        <span className="dados-txt">{produto.quant}X {produto.titulo} - </span>&nbsp;
+                        <span className="dados-val">R${produto.preco}&nbsp;</span><i onClick={() => removeFromCart(index)} className="far fa-trash-alt"></i>
+                      </div>
+                    );
+                  }
                 })}
               </div>
 
