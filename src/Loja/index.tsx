@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Whatsapp from '../assets/img/icons/whatsapp.svg';
+import { Circle } from 'react-preloaders';
 
 import './styles.css';
 
@@ -29,6 +30,7 @@ function Loja(){
   const [icone, setIcone] = useState('up');
   const [quantidade, setQuantidade] = useState(1);
   const [category, setCategory] = useState('');
+  const [loading, setLoading] = useState(true);
 
   function addToCart(titulo: string, preco: string, quantidade: number, id: string){
     if(cartArray[0].quant === 0){
@@ -54,7 +56,8 @@ function Loja(){
       fetch("https://indecisos.space/api/")
       .then((response) => response.json())
       .then((responseJSON) => {
-        setProductsArray(responseJSON)
+        setProductsArray(responseJSON);
+        setLoading(false);
       });
     }
   }
@@ -112,6 +115,8 @@ function Loja(){
   }
 
   return(
+    <>
+      <Circle customLoading={loading} />
       <main onLoad={recebeProdutos}>
 
         <div id="pagina" className="pagina" style={paddingTop}>
@@ -266,6 +271,7 @@ function Loja(){
         </div>
 
       </main>
+    </>
   )
 }
 

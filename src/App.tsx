@@ -4,7 +4,9 @@ import Loja from './Loja';
 
 function App() {
   return (
-    <Loja />
+    <>
+      <Loja />
+    </>
   );
 }
 
