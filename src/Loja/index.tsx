@@ -16,12 +16,17 @@ interface productProps {
 function Loja(){
 
   const [productsArray, setProductsArray] = useState([]);
+  const [configArray, setConfigArray] = useState([]);
   const [cartArray, setCartArray] = useState([{titulo: '', preco: '', quant: 0, obs: '', id: 0, cart: 1}]);
   const [preco, setPreco] = useState('0.00');
-  const [custoEntrega, setCustoEntrega] = useState('2.00');
+  const [custoEntrega, setCustoEntrega] = useState('0.00');
+  const [valEntrega, setValEntrega] = useState('');
 
   const [msg, setMsg] = useState('active');
   const [listagem, setListagem] = useState('inactive');
+
+  const [logo, setLogo] = useState('');
+  const [cor, setCor] = useState('');
 
   const [envio, setEnvio] = useState('');
   const [pagamento, setPagamento] = useState('');
@@ -91,17 +96,37 @@ function Loja(){
   // Valor da compra
   function valorDaCompra(acao: string, quantidade: number, valorProduto: number){
     if(acao === 'add'){
-      var c = parseFloat(preco) + (valorProduto * quantidade);
-      setPreco(c.toFixed(2));
+      setPreco((parseFloat(preco) + (valorProduto * quantidade)).toFixed(2));
     } else if (acao === 'rem'){
-      var c = parseFloat(preco) - (valorProduto * quantidade);
-      setPreco(c.toFixed(2));
+      setPreco((parseFloat(preco) - (valorProduto * quantidade)).toFixed(2));
     }
   }
   // ================================================================== //
 
+  function alteraConfig(array: any){
+    var title = array[0].valor;
+    if (document.title !== title) {
+      document.title = title;
+    }
+    setLogo(array[1].valor);
+    setCor(array[2].valor);
+    setValEntrega(array[4].valor);
+    recebeProdutos();
+  }
+
   // ================================================================== //
   // Recebe a listagem de produtos da API
+  function recebeConfiguracoes(){
+    if(configArray.length === 0){
+      fetch("https://indecisos.space/api/config/")
+      .then((response) => response.json())
+      .then((responseJSON) => {
+        setConfigArray(responseJSON);
+        alteraConfig(responseJSON);
+      });
+    }
+  }
+
   function recebeProdutos(){
     if(productsArray.length === 0){
       fetch("https://indecisos.space/api/")
@@ -154,6 +179,7 @@ function Loja(){
   function metodoDeEnvio(n: string){
     setEnvio(n);
     (n==='receber' ? setEntrega('active') : setEntrega('inactive'));
+    (n==='receber' ? setCustoEntrega(valEntrega) : setCustoEntrega('0.00'));
   }
   function metodoDePagamento(n: string){
     setPagamento(n);
@@ -170,10 +196,11 @@ function Loja(){
       <Circle customLoading={loading} />
       <header>
         <div>
-          <img src="https://www.criestore.com.br/wp-content/uploads/2020/09/Logo_Branco_Site-300x88.png" alt="Logo"/>
+          <img src={logo} alt="Logo"/>
         </div>
       </header>
-      <main onLoad={recebeProdutos}>
+      <style>:root{`{--color-primary: ${cor}}`}</style>
+      <main onLoad={recebeConfiguracoes}>
 
         <div id="pagina" className="pagina" style={paddingTop}>
         <div className="separador-topo"></div>
@@ -282,11 +309,11 @@ function Loja(){
                 </div>
                 <div className="entrega dados">
                   <span className="dados-txt">Entrega:</span>&nbsp;
-                  <span className="dados-val">R$0,00</span>
+                  <span className="dados-val">R${custoEntrega}</span>
                 </div>
                 <div className="total dados">
                   <span className="dados-txt">Total:</span>&nbsp;
-                  <span className="dados-val">R${String(parseFloat(preco).toFixed(2))}</span>
+                  <span className="dados-val">R${(parseFloat(preco) + parseFloat(custoEntrega)).toFixed(2)}</span>
                 </div>
               </div>
 

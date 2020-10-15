@@ -10,9 +10,9 @@ abstract class ClassConexao{
   }
 }
 
-class ClassProdutos extends ClassConexao{
+class ClassConfig extends ClassConexao{
 
-  public function exibeProdutos(){
+  public function listaConfig(){
     $BFetch=$this->conectaDB()->prepare("select * from tablename");
     $BFetch->execute();
 
@@ -21,12 +21,9 @@ class ClassProdutos extends ClassConexao{
 
     while($Fetch=$BFetch->fetch(PDO::FETCH_ASSOC)){
       $J[$I]=[
-        "id"=>$Fetch['id'],
-        "titulo"=>$Fetch['titulo'],
-        "foto"=>$Fetch['foto'],
-        "preco"=>$Fetch['preco'],
-        "detalhes"=>$Fetch['detalhes'],
-        "categoria"=>$Fetch['categoria']
+        "tipo"=>$Fetch['tipo'],
+        "valor"=>$Fetch['valor'],
+        "extra"=>$Fetch['extra']
       ];
 
       $I++;
@@ -39,5 +36,5 @@ class ClassProdutos extends ClassConexao{
   }
 }
 
-$Produtos=new ClassProdutos();
-$Produtos->exibeProdutos();
+$Produtos=new ClassConfig();
+$Produtos->listaConfig();

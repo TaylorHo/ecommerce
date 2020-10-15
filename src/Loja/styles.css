@@ -40,7 +40,7 @@ main .resumo-do-pedido {
 }
 
 main .resumo-do-pedido .topo-do-pedido {
-  background-color: var(--color-red);
+  background-color: var(--color-primary);
   height: 56px;
   color: var(--color-text-button);
   border: unset;
@@ -54,7 +54,7 @@ main .resumo-do-pedido .topo-do-pedido {
 
 main .resumo-do-pedido .topo-do-pedido .counter {
   background-color: var(--color-text-button);
-  color: var(--color-red);
+  color: var(--color-primary);
   border-radius: 2.4rem;
   width: 3rem;
   height: 2.2rem;
@@ -131,7 +131,7 @@ main .resumo-do-pedido .det {
 }
 
 .detalhes-do-pedido .listagem-de-produtos .lista i {
-  color: var(--color-red);
+  color: var(--color-primary);
 }
 
 .detalhes-do-pedido .nota-do-pedido .dados {
@@ -168,7 +168,7 @@ main .resumo-do-pedido .det {
   display: flex;
   padding-top: 15px;
   justify-content: center;
-  color: var(--color-red);
+  color: var(--color-primary);
   font-size: 1.4rem;
 }
 
@@ -178,7 +178,7 @@ main .resumo-do-pedido .det {
 
 .detalhes-do-pedido .detalhes .endereco a {
   text-decoration: none;
-  color: var(--color-red);
+  color: var(--color-primary);
   margin-top: -3px;
 }
 
@@ -209,7 +209,7 @@ main .resumo-do-pedido .det {
 }
 
 .detalhes-do-pedido .fixed-bottom a {
-  background: var(--color-red);
+  background: var(--color-primary);
   text-decoration: none;
   color: var(--color-text-button);
   width: 80%;
@@ -276,7 +276,7 @@ main .resumo-do-pedido .det {
   cursor: pointer;
   text-decoration: none;
   color: var(--color-text-button);
-  background: var(--color-red);
+  background: var(--color-primary);
   border-radius: 5px;
 }
 
@@ -335,7 +335,7 @@ main .resumo-do-pedido .det {
 }
 
 .fechar-popup i {
-  color: var(--color-red);
+  color: var(--color-primary);
   font-size: 4rem;
 }
 
@@ -384,7 +384,7 @@ main .resumo-do-pedido .det {
 }
 
 .adicionar-produto-ao-carrinho .quantidade i {
-  background: var(--color-red);
+  background: var(--color-primary);
   color: var(--color-text-button);
   width: 34px;
   height: 34px;
@@ -411,7 +411,7 @@ main .resumo-do-pedido .det {
   cursor: pointer;
   text-decoration: none;
   color: var(--color-text-button);
-  background: var(--color-red);
+  background: var(--color-primary);
   border-radius: 5px;
 }
 
