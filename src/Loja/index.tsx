@@ -15,8 +15,10 @@ interface productProps {
 
 function Loja(){
 
-  const [productsArray, setProductsArray] = useState([]);            // Produtos do Servidor
-  const [cartArray, setCartArray] = useState([{titulo: '', preco: '', quant: 0, obs: '', id: 0, cart: 1}]); // Produtos no carrinho
+  const [productsArray, setProductsArray] = useState([]);
+  const [cartArray, setCartArray] = useState([{titulo: '', preco: '', quant: 0, obs: '', id: 0, cart: 1}]);
+  const [preco, setPreco] = useState('0.00');
+  const [custoEntrega, setCustoEntrega] = useState('2.00');
 
   const [msg, setMsg] = useState('active');
   const [listagem, setListagem] = useState('inactive');
@@ -40,6 +42,7 @@ function Loja(){
       setCartArray([
         {titulo: titulo, preco: preco, quant: quantidade, obs: obs, id: parseInt(id), cart: 1}
       ]);
+      setPreco(preco);
       setMsg('inactive');
       setListagem('active');
     } else if (cartArray[0].quant !== 0){
@@ -51,6 +54,7 @@ function Loja(){
     setObservacao('');
     setCounter(counter + quantidade);
     toggleProductPopup(id, 0);
+    valorDaCompra('add', quantidade, parseFloat(preco));
   }
   // ================================================================== //
 
@@ -60,6 +64,7 @@ function Loja(){
     const updatedCart = cartArray.map((produto, index) => {
       if(index === position){
         setCounter(counter - produto.quant);
+        valorDaCompra('rem', produto.quant, parseFloat(produto.preco));
         return {...produto, quant: 0, obs: '', cart: 0}
       }
       return produto;
@@ -68,9 +73,29 @@ function Loja(){
     verificaTotalDeProdutos();
   }
   function verificaTotalDeProdutos(){
-    if(counter == 1){
+    var a = cartArray.length;
+    cartArray.map((produto) => {
+      if(produto.cart === 0){
+        a = a - 1;
+      }
+      return a;
+    })
+    if(a <= 1){
       setMsg('active');
       setListagem('inactive');
+    }
+  }
+  // ================================================================== //
+
+  // ================================================================== //
+  // Valor da compra
+  function valorDaCompra(acao: string, quantidade: number, valorProduto: number){
+    if(acao === 'add'){
+      var c = parseFloat(preco) + (valorProduto * quantidade);
+      setPreco(c.toFixed(2));
+    } else if (acao === 'rem'){
+      var c = parseFloat(preco) - (valorProduto * quantidade);
+      setPreco(c.toFixed(2));
     }
   }
   // ================================================================== //
@@ -145,7 +170,7 @@ function Loja(){
       <Circle customLoading={loading} />
       <header>
         <div>
-          <img src="https://www.criestore.com.br/wp-content/uploads/2020/09/Logo_Branco_Site-300x88.png"/>
+          <img src="https://www.criestore.com.br/wp-content/uploads/2020/09/Logo_Branco_Site-300x88.png" alt="Logo"/>
         </div>
       </header>
       <main onLoad={recebeProdutos}>
@@ -242,7 +267,7 @@ function Loja(){
                   if (produto.cart === 1){
                     return(
                       <div className="lista" key={index}>
-                        <span className="dados-txt">{produto.quant}X {produto.titulo} - </span>&nbsp;
+                        <span className="dados-txt"><strong>{produto.quant}X</strong> {produto.titulo} - </span>&nbsp;
                         <span className="dados-val">R${produto.preco}&nbsp;</span><i onClick={() => removeFromCart(index)} className="far fa-trash-alt"></i>
                       </div>
                     );
@@ -253,7 +278,7 @@ function Loja(){
               <div className="nota-do-pedido">
                 <div className="subtotal dados">
                   <span className="dados-txt">Subtotal:</span>&nbsp;
-                  <span className="dados-val">R$0,00</span>
+                  <span className="dados-val">R${preco}</span>
                 </div>
                 <div className="entrega dados">
                   <span className="dados-txt">Entrega:</span>&nbsp;
@@ -261,7 +286,7 @@ function Loja(){
                 </div>
                 <div className="total dados">
                   <span className="dados-txt">Total:</span>&nbsp;
-                  <span className="dados-val">R$0,00</span>
+                  <span className="dados-val">R${String(parseFloat(preco).toFixed(2))}</span>
                 </div>
               </div>
 
