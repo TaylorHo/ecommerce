@@ -131,7 +131,7 @@ main .resumo-do-pedido .det {
 }
 
 .detalhes-do-pedido .listagem-de-produtos .lista i {
-  color: var(--color-primary);
+  color: var(--color-red);
 }
 
 .detalhes-do-pedido .nota-do-pedido .dados {
@@ -223,6 +223,43 @@ main .resumo-do-pedido .det {
   height: 20px;
   vertical-align: middle;
   margin-bottom: 3px;
+}
+
+.popups-de-entrega {
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.popups-de-entrega input {
+  margin-top: 15px;
+  height: 4rem;
+}
+
+.popups-de-entrega h2 {
+  padding: 20px 0;
+}
+
+.popups-de-entrega button {
+  background: var(--color-primary);
+  color: var(--color-text-button);
+  border: none;
+  width: 80%;
+  padding: 12px 4px;
+  margin-top: 25px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.popups-de-entrega button img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+.popups-de-entrega .popup {
+  padding: 15px;
+  width: 100%;
 }
 /* RESUMO DO PEDIDO PARTE DE DENTRO - FIM */
 

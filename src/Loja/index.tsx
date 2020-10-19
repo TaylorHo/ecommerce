@@ -40,6 +40,18 @@ function Loja(){
   const [observacao, setObservacao] = useState('')
   const [loading, setLoading] = useState(true);
 
+  const [popupEntrega, setPopupEntrega] = useState('inactive');
+  const [popupDados, setPopupDados] = useState('inactive');
+
+  const [nome, setNome] = useState('');
+  const [tel, setTel] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [rua, setRua] = useState('');
+  const [ref, setRef] = useState('');
+  const [bairro, setBairro] = useState('');
+
+  const [enderecoEntrega, setEnderecoEntrega] = useState({nome: '', tel: '', cidade: '', rua: '', ref: '', bairro: ''});
+
   // ================================================================== //
   // Adicionar produtos ao array do carrinho
   function addToCart(titulo: string, preco: string, quantidade: number, id: string, obs: string){
@@ -187,6 +199,38 @@ function Loja(){
   }
   // ================================================================== //
 
+  // ================================================================== //
+  // Função do botão REALIZAR PEDIDO
+  function linkFinal(){
+    if(nome !== '' && tel !== ''){
+      // montar o link
+      window.location.href = "https://google.com.br/";
+    } else {
+      alert('Preencha os dados necessários');
+    }
+  }
+
+  function criaLink(){
+    if(envio === 'receber'){
+      if(enderecoEntrega.nome !== '' && enderecoEntrega.tel !== '' && enderecoEntrega.cidade !== '' &&enderecoEntrega.rua !== '' && enderecoEntrega.bairro !== ''){
+        linkFinal();
+      } else {
+        setPopupEntrega('active');
+      }
+    } else if (envio === 'retirar'){
+      setPopupDados('active');
+    } else {
+      alert('Você precisa selecionar os detalhes do pedido.');
+    }
+  }
+
+  function salvaEndereco(){
+      setEnderecoEntrega({nome, tel, cidade, rua, ref, bairro});
+      setPopupEntrega('inactive');
+  }
+
+  // ================================================================== //
+
   const paddingTop = {
     paddingTop: (9 * 204) - 240,
   }
@@ -330,7 +374,7 @@ function Loja(){
                   <div className={entrega}>
                     <div className="endereco">
                       <i className="material-icons">create</i>
-                      <a href="#">&nbsp;Editar Endereço</a>
+                      <a onClick={() => setPopupEntrega('active')}>&nbsp;Editar Endereço</a>
                     </div>
                     <div className="metodo-de-pagamento">
                       <select value={pagamento} name="metodos-de-pagamento" onChange={(e) => metodoDePagamento(e.target.value)}>
@@ -346,9 +390,33 @@ function Loja(){
                   </div>
                 </div>
               </div>
+              <div className="popups-de-entrega">
+                <div className={`popup product-popup ${popupEntrega}`}>
+                  <div className="fechar-popup">
+                    <i onClick={() => setPopupEntrega('inactive')} className="material-icons">clear</i>
+                  </div>
+                  <h2 className="title">Endereço e dados</h2>
+                  <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
+                  <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
+                  <input type="text" value={cidade} placeholder="Cidade/Município" onChange={(e) => setCidade(e.target.value)}/>
+                  <input type="text" value={rua} placeholder="Rua, número, etc." onChange={(e) => setRua(e.target.value)}/>
+                  <input type="text" value={ref} placeholder="Apto, ponto de ref. (opcional)" onChange={(e) => setRef(e.target.value)}/>
+                  <input type="text" value={bairro} placeholder="Bairro" onChange={(e) => setBairro(e.target.value)}/>
+                  <button onClick={salvaEndereco}>Feito</button>
+                </div>
+                <div className={`popup product-popup ${popupDados}`}>
+                  <div className="fechar-popup">
+                    <i onClick={() => setPopupDados('inactive')} className="material-icons">clear</i>
+                  </div>
+                  <h2>Dados de Contato</h2>
+                  <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
+                  <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
+                  <button onClick={linkFinal}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</button>
+                </div>
+              </div>
 
               <div className="fixed-bottom">
-                <a href="#"><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</a>
+                <a onClick={criaLink}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</a>
               </div>
 
             </div>
