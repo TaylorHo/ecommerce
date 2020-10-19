@@ -27,19 +27,20 @@ header img {
 
 /* RESUMO DO PEDIDO - INÍCIO */
 
-main {
+.main {
   width: 100%;
+  height: 100vh;
   align-items: center;
   text-align: center;
 }
 
-main .resumo-do-pedido {
+.main .resumo-do-pedido {
   position: fixed;
   bottom: 0;
   width:100%;
 }
 
-main .resumo-do-pedido .topo-do-pedido {
+.main .resumo-do-pedido .topo-do-pedido {
   background-color: var(--color-primary);
   height: 56px;
   color: var(--color-text-button);
@@ -52,7 +53,7 @@ main .resumo-do-pedido .topo-do-pedido {
   text-align: center;
 }
 
-main .resumo-do-pedido .topo-do-pedido .counter {
+.main .resumo-do-pedido .topo-do-pedido .counter {
   background-color: var(--color-text-button);
   color: var(--color-primary);
   border-radius: 2.4rem;
@@ -64,11 +65,11 @@ main .resumo-do-pedido .topo-do-pedido .counter {
   margin-top: 2rem;
 }
 
-main .resumo-do-pedido .topo-do-pedido .titulo {
+.main .resumo-do-pedido .topo-do-pedido .titulo {
   margin-top: 1.5rem;
 }
 
-main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
+.main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
   font-size: 6rem;
 }
 
@@ -80,7 +81,7 @@ main .resumo-do-pedido .topo-do-pedido .ir-ao-topo i {
   display: block;
 }
 
-main .resumo-do-pedido .det {
+.main .resumo-do-pedido .det {
   background-color: var(--color-background);
   height: calc(100vh - 56px);
 }

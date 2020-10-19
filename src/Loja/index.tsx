@@ -231,10 +231,6 @@ function Loja(){
 
   // ================================================================== //
 
-  const paddingTop = {
-    paddingTop: (9 * 204) - 240,
-  }
-
   return(
     <>
       <Circle customLoading={loading} />
@@ -244,10 +240,10 @@ function Loja(){
         </div>
       </header>
       <style>:root{`{--color-primary: ${cor}}`}</style>
-      <main onLoad={recebeConfiguracoes}>
+      <div className="main" onLoad={recebeConfiguracoes}>
 
-        <div id="pagina" className="pagina" style={paddingTop}>
-        <div className="separador-topo"></div>
+        <div id="pagina" className="pagina">
+          <div className="separador-topo"></div>
           <div className="select-block">
               <select value={category} name="categorias" onChange={(e) => { setCategory(e.target.value) }}>
                   <option value="" disabled hidden >Categoria</option>
@@ -423,7 +419,7 @@ function Loja(){
           </div>
         </div>
 
-      </main>
+      </div>
     </>
   )
 }
