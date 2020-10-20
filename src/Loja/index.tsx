@@ -205,18 +205,28 @@ function Loja(){
   // Função do botão REALIZAR PEDIDO
   function montaLink(tipo: string){
     // adicionar os produtos no link
+    var produtos = '';
+    cartArray.map((produto) => {
+      if(produto.cart === 1){
+        if(produtos === ''){
+          produtos = produto.id + ':' + produto.titulo + ':' + produto.quant + ':' + produto.preco + ':' + produto.obs;
+        } else {
+          produtos = produtos + ',' + produto.id + ':' + produto.titulo + ':' + produto.quant + ':' + produto.preco + ':' + produto.obs;
+        }
+      }
+    })
+
     if(tipo === 'retirar'){
-      var caminho = '?nome=' + nome + '&tel=' + tel;
+      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel;
       window.location.href="https://lindeexemplo/" + caminho;
     } else if (tipo === 'delivery'){
-      var caminho = '?nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento;
+      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento;
       if(pagamento === 'dinheiro'){
         window.location.href='https://lindeexemplo/' + caminho + '&troco=' + trocoVal;
       } else {
         window.location.href="https://lindeexemplo/" + caminho;
       }
     }
-    // no fim tem que redirecionar
   }
 
   function linkRetirar(){
