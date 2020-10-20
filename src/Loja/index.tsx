@@ -216,15 +216,17 @@ function Loja(){
       }
     })
 
+    var add = '&entrega=' + envio + '&total=' + (parseFloat(preco) + parseFloat(custoEntrega)).toFixed(2);
+
     if(tipo === 'retirar'){
-      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel;
-      window.location.href="https://lindeexemplo/" + caminho;
+      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel + add;
+      window.location.href="https://indecisos.space/api/msg/" + caminho;
     } else if (tipo === 'delivery'){
-      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento;
+      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento + add;
       if(pagamento === 'dinheiro'){
-        window.location.href='https://lindeexemplo/' + caminho + '&troco=' + trocoVal;
+        window.location.href='https://indecisos.space/api/msg/' + caminho + '&troco=' + trocoVal;
       } else {
-        window.location.href="https://lindeexemplo/" + caminho;
+        window.location.href="https://indecisos.space/api/msg/" + caminho;
       }
     }
   }
