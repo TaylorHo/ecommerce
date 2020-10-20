@@ -40,6 +40,8 @@ function Loja(){
   const [observacao, setObservacao] = useState('')
   const [loading, setLoading] = useState(true);
 
+  const [trocoVal, setTrocoVal] = useState('');
+
   const [popupEntrega, setPopupEntrega] = useState('inactive');
   const [popupDados, setPopupDados] = useState('inactive');
 
@@ -201,23 +203,43 @@ function Loja(){
 
   // ================================================================== //
   // Função do botão REALIZAR PEDIDO
-  function linkFinal(){
+  function montaLink(tipo: string){
+    // adicionar os produtos no link
+    if(tipo === 'retirar'){
+      var caminho = '?nome=' + nome + '&tel=' + tel;
+      window.location.href="https://lindeexemplo/" + caminho;
+    } else if (tipo === 'delivery'){
+      var caminho = '?nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento;
+      if(pagamento === 'dinheiro'){
+        window.location.href='https://lindeexemplo/' + caminho + '&troco=' + trocoVal;
+      } else {
+        window.location.href="https://lindeexemplo/" + caminho;
+      }
+    }
+    // no fim tem que redirecionar
+  }
+
+  function linkRetirar(){
     if(nome !== '' && tel !== ''){
-      // montar o link
-      window.location.href = "https://google.com.br/";
+      montaLink('retirar');
     } else {
       alert('Preencha os dados necessários');
     }
   }
 
-  function criaLink(){
+  function redirectEnvio(){
     if(envio === 'receber'){
       if(enderecoEntrega.nome !== '' && enderecoEntrega.tel !== '' && enderecoEntrega.cidade !== '' &&enderecoEntrega.rua !== '' && enderecoEntrega.bairro !== ''){
-        linkFinal();
+        if (pagamento !== ''){
+          montaLink('delivery');
+        } else {
+          alert('Selecione um meio de pagamento');
+        }
+        
       } else {
         setPopupEntrega('active');
       }
-    } else if (envio === 'retirar'){
+    } else if(envio === 'retirar'){
       setPopupDados('active');
     } else {
       alert('Você precisa selecionar os detalhes do pedido.');
@@ -380,7 +402,7 @@ function Loja(){
                         <option value="debito">Cartão de Débito</option>
                       </select>
                       <div className={`troco ${troco}`}>
-                        <input type="number" placeholder="Troco para"/>
+                        <input type="number" value={trocoVal} placeholder="Troco para" onChange={(e) => setTrocoVal(e.target.value)}/>
                       </div>
                     </div>
                   </div>
@@ -407,12 +429,12 @@ function Loja(){
                   <h2>Dados de Contato</h2>
                   <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
                   <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
-                  <button onClick={linkFinal}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</button>
+                  <button onClick={linkRetirar}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</button>
                 </div>
               </div>
 
               <div className="fixed-bottom">
-                <a onClick={criaLink}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</a>
+                <a onClick={redirectEnvio}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</a>
               </div>
 
             </div>
