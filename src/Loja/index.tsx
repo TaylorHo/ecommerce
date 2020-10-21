@@ -49,6 +49,7 @@ function Loja(){
   const [tel, setTel] = useState('');
   const [cidade, setCidade] = useState('');
   const [rua, setRua] = useState('');
+  const [numero, setNumero] = useState('');
   const [ref, setRef] = useState('');
   const [bairro, setBairro] = useState('');
 
@@ -208,21 +209,26 @@ function Loja(){
     var produtos = '';
     cartArray.map((produto) => {
       if(produto.cart === 1){
-        if(produtos === ''){
-          produtos = produto.id + ':' + produto.titulo + ':' + produto.quant + ':' + produto.preco + ':' + produto.obs;
+        if(produto.obs === ''){
+          var obs = 'Nenhuma';
         } else {
-          produtos = produtos + ',' + produto.id + ':' + produto.titulo + ':' + produto.quant + ':' + produto.preco + ':' + produto.obs;
+          var obs = produto.obs;
+        }
+        if(produtos === ''){
+          produtos = produto.titulo + ':' + produto.quant + ':' + produto.preco + ':' + obs;
+        } else {
+          produtos = produtos + ',' + produto.titulo + ':' + produto.quant + ':' + produto.preco + ':' + obs;
         }
       }
     })
 
-    var add = '&entrega=' + envio + '&total=' + (parseFloat(preco) + parseFloat(custoEntrega)).toFixed(2);
+    var add = '&total=' + (parseFloat(preco) + parseFloat(custoEntrega)).toFixed(2);
 
     if(tipo === 'retirar'){
-      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel + add;
+      var caminho = '?produtos=' + produtos + '&entrega=' + envio + '&nome=' + nome + '&tel=' + tel + add;
       window.location.href="https://indecisos.space/api/msg/" + caminho;
     } else if (tipo === 'delivery'){
-      var caminho = '?produtos=' + produtos + '&nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento + add;
+      var caminho = '?produtos=' + produtos + '&entrega=' + envio + '&nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&numero=' + numero + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento + add;
       if(pagamento === 'dinheiro'){
         window.location.href='https://indecisos.space/api/msg/' + caminho + '&troco=' + trocoVal;
       } else {
@@ -429,7 +435,8 @@ function Loja(){
                   <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
                   <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
                   <input type="text" value={cidade} placeholder="Cidade/Município" onChange={(e) => setCidade(e.target.value)}/>
-                  <input type="text" value={rua} placeholder="Rua, número, etc." onChange={(e) => setRua(e.target.value)}/>
+                  <input type="text" value={rua} placeholder="Rua" onChange={(e) => setRua(e.target.value)}/>
+                  <input type="text" value={numero} placeholder="Número" onChange={(e) => setNumero(e.target.value)}/>
                   <input type="text" value={ref} placeholder="Apto, ponto de ref. (opcional)" onChange={(e) => setRef(e.target.value)}/>
                   <input type="text" value={bairro} placeholder="Bairro" onChange={(e) => setBairro(e.target.value)}/>
                   <button onClick={salvaEndereco}>Feito</button>
