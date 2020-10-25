@@ -17,6 +17,7 @@ function Loja(){
 
   const [productsArray, setProductsArray] = useState([]);
   const [configArray, setConfigArray] = useState([]);
+  const [categoryArray, setCategoryArray] = useState([]);
   const [cartArray, setCartArray] = useState([{titulo: '', preco: '', quant: 0, obs: '', id: 0, cart: 1}]);
   const [preco, setPreco] = useState('0.00');
   const [custoEntrega, setCustoEntrega] = useState('0.00');
@@ -117,7 +118,7 @@ function Loja(){
     }
   }
   // ================================================================== //
-
+  var contato = '';
   function alteraConfig(array: any){
     var title = array[0].valor;
     if (document.title !== title) {
@@ -127,6 +128,7 @@ function Loja(){
     setCor(array[2].valor);
     setValEntrega(array[4].valor);
     recebeProdutos();
+    contato = array[3].valor;
   }
 
   // ================================================================== //
@@ -148,11 +150,26 @@ function Loja(){
       .then((response) => response.json())
       .then((responseJSON) => {
         setProductsArray(responseJSON);
+        defineCategorias(responseJSON);
         setLoading(false);
       });
     }
   }
   // ================================================================== //
+
+  // Salva um array de categorias
+  function defineCategorias(array: any){
+    var t: any[] = [];
+    const cat = array.map((p: any) => {
+      if (t.indexOf(p.categoria) === -1){
+        t.push(p.categoria);
+        return p.categoria;
+      } else {
+        return 0;
+      }
+    });
+    setCategoryArray(cat);
+  }
 
   // ================================================================== //
   // Aumenta e diminui a quantidade de produtos para adicionar ao carrinho
@@ -225,10 +242,10 @@ function Loja(){
     var add = '&total=' + (parseFloat(preco) + parseFloat(custoEntrega)).toFixed(2);
 
     if(tipo === 'retirar'){
-      var caminho = '?produtos=' + produtos + '&entrega=' + envio + '&nome=' + nome + '&tel=' + tel + add;
+      var caminho = '?produtos=' + produtos + '&entrega=' + envio + '&nome=' + nome + '&tel=' + tel + add + '&contato=' + contato;
       window.location.href="https://indecisos.space/api/msg/" + caminho;
     } else if (tipo === 'delivery'){
-      var caminho = '?produtos=' + produtos + '&entrega=' + envio + '&nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&numero=' + numero + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento + add;
+      var caminho = '?produtos=' + produtos + '&entrega=' + envio + '&nome=' + nome + '&tel=' + tel + '&cidade=' + cidade + '&rua=' + rua + '&numero=' + numero + '&ref=' + ref + '&bairro=' + bairro + '&pagamento=' + pagamento + add + '&contato=' + contato;
       if(pagamento === 'dinheiro'){
         window.location.href='https://indecisos.space/api/msg/' + caminho + '&troco=' + trocoVal;
       } else {
@@ -268,8 +285,12 @@ function Loja(){
       setEnderecoEntrega({nome, tel, cidade, rua, ref, bairro});
       setPopupEntrega('inactive');
   }
-
   // ================================================================== //
+
+  function categorias(categoria: string){
+    setCategory(categoria);
+    window.location.href='#'+ categoria;
+  }
 
   return(
     <>
@@ -285,67 +306,78 @@ function Loja(){
         <div id="pagina" className="pagina">
           <div className="separador-topo"></div>
           <div className="select-block">
-              <select value={category} name="categorias" onChange={(e) => { setCategory(e.target.value) }}>
+              <select value={category} name="categorias" onChange={(e) => { categorias(e.target.value) }}>
                   <option value="" disabled hidden >Categoria</option>
-                  <option value="categoria-01">Categoria 01</option>
-                  <option value="categoria-02">Categoria 02</option>
-                  <option value="categoria-03">Categoria 03</option>
-                  <option value="categoria-04">Categoria 04</option>
-                  <option value="categoria-05">Categoria 05</option>
+                  {categoryArray.map((cat: any) => {
+                    if(cat !== 0){
+                      return <option key={cat} value={cat}>{cat}</option>
+                    }
+                  })}
               </select>
           </div>
 
           <div className="produtos">
-            <div className="categoria">
-            <h2>Categoria</h2>
-            </div>
-            {productsArray.map((produto: productProps) => {
-              return (
-                <div className="item" key={produto.id}>
-                  <div className="descricao-do-produto">
-                    <h3>{produto.titulo}</h3>
-                    <p>{produto.detalhes}</p>
-                    <div className="botao-adicionar">
-                      <a onClick={() => toggleProductPopup(produto.id, 1)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
-                      <span>R${produto.preco}</span>
-                    </div>
+            {categoryArray.map((cat: any) => {
+              if(cat !== 0){
+                return (
+                  <div key={cat}>
+                  <div className="marcador" id={cat}></div>
+                  <div className="categoria">
+                    <h2>{cat}</h2>
                   </div>
-
-                  <div className="imagem-do-produto">
-                    <img src={produto.foto} alt="Foto do produto"/>
-                  </div>
-
-                  <div id={`produto-${produto.id}`} className="product-popup inactive">
-                    <div className="dados-do-popup-do-produto">
-                      <div className="fechar-popup">
-                        <i onClick={() => toggleProductPopup(produto.id, 0)} className="material-icons">clear</i>
-                      </div>
-                      <div className="conteudo-do-popup-do-produto">
-                        <h3 className="title">{produto.titulo}</h3>
-                        <div className="imagem-do-popup">
-                          <img src={produto.foto} alt="Foto do produto"/>
+                  {productsArray.map((produto: productProps) => {
+                    if(cat !== 0 && cat === produto.categoria){
+                      return (
+                        <div className="item" key={produto.id}>
+                          <div className="descricao-do-produto">
+                            <h3>{produto.titulo}</h3>
+                            <p>{produto.detalhes}</p>
+                            <div className="botao-adicionar">
+                              <a onClick={() => toggleProductPopup(produto.id, 1)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                              <span>R${produto.preco}</span>
+                            </div>
+                          </div>
+        
+                          <div className="imagem-do-produto">
+                            <img src={produto.foto} alt="Foto do produto"/>
+                          </div>
+        
+                          <div id={`produto-${produto.id}`} className="product-popup inactive">
+                            <div className="dados-do-popup-do-produto">
+                              <div className="fechar-popup">
+                                <i onClick={() => toggleProductPopup(produto.id, 0)} className="material-icons">clear</i>
+                              </div>
+                              <div className="conteudo-do-popup-do-produto">
+                                <h3 className="title">{produto.titulo}</h3>
+                                <div className="imagem-do-popup">
+                                  <img src={produto.foto} alt="Foto do produto"/>
+                                </div>
+                                <div className="descricao-do-produto">
+                                  <p>{produto.detalhes}</p>
+                                </div>
+                                <div className="observacoes">
+                                  <input type="text" name="observacoes" placeholder="Observação..." value={observacao} onChange={(e) => { setObservacao(e.target.value) }}/>
+                                </div>
+                              </div>
+                              <div className="adicionar-produto-ao-carrinho">
+                                <div className="quantidade">
+                                  <i onClick={diminuiQuantidade} className="material-icons">remove</i>
+                                  <input type="text" value={quantidade} readOnly/>
+                                  <i onClick={aumentaQuantidade} className="material-icons">add</i>
+                                </div>
+                                <div className="adicionar">
+                                  <a onClick={() => addToCart(produto.titulo, produto.preco, quantidade, produto.id, observacao)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div className="descricao-do-produto">
-                          <p>{produto.detalhes}</p>
-                        </div>
-                        <div className="observacoes">
-                          <input type="text" name="observacoes" placeholder="Observação..." value={observacao} onChange={(e) => { setObservacao(e.target.value) }}/>
-                        </div>
-                      </div>
-                      <div className="adicionar-produto-ao-carrinho">
-                        <div className="quantidade">
-                          <i onClick={diminuiQuantidade} className="material-icons">remove</i>
-                          <input type="text" value={quantidade} readOnly/>
-                          <i onClick={aumentaQuantidade} className="material-icons">add</i>
-                        </div>
-                        <div className="adicionar">
-                          <a onClick={() => addToCart(produto.titulo, produto.preco, quantidade, produto.id, observacao)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      )
+                    }
+                })}
                 </div>
-              )
+                )
+              }
             })}
           </div>
         </div>
