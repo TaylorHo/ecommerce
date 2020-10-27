@@ -22,6 +22,7 @@ function Loja(){
   const [preco, setPreco] = useState('0.00');
   const [custoEntrega, setCustoEntrega] = useState('0.00');
   const [valEntrega, setValEntrega] = useState('');
+  const [contato, setContato] = useState('')
 
   const [msg, setMsg] = useState('active');
   const [listagem, setListagem] = useState('inactive');
@@ -120,7 +121,6 @@ function Loja(){
     }
   }
   // ================================================================== //
-  var contato = '';
   function alteraConfig(array: any){
     var title = array[0].valor;
     if (document.title !== title) {
@@ -129,8 +129,8 @@ function Loja(){
     setLogo(array[1].valor);
     setCor(array[2].valor);
     setValEntrega(array[4].valor);
+    setContato(array[3].valor);
     recebeProdutos();
-    contato = array[3].valor;
   }
 
   // ================================================================== //
