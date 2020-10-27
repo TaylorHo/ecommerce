@@ -43,15 +43,22 @@ header img {
 
 .main .resumo-do-pedido .topo-do-pedido {
   background-color: var(--color-primary);
-  height: 56px;
   color: var(--color-text-button);
   border: unset;
   font-size: 2rem;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  align-content: center;
+  align-content: flex-end;
   justify-content: center;
   text-align: center;
+}
+
+.o {
+  height: 120px!important;
+}
+
+.a {
+  height: calc(100vh - 112px)!important;
 }
 
 .main .resumo-do-pedido .topo-do-pedido .counter {

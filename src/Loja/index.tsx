@@ -42,6 +42,8 @@ function Loja(){
   const [loading, setLoading] = useState(true);
 
   const [trocoVal, setTrocoVal] = useState('');
+  const [classeAdd, setClasseAdd] = useState('')
+  const [classeAdd2, setClasseAdd2] = useState('')
 
   const [popupEntrega, setPopupEntrega] = useState('inactive');
   const [popupDados, setPopupDados] = useState('inactive');
@@ -203,6 +205,8 @@ function Loja(){
   function resumoPedido() {
     (classe==='inactive' ? setClasse('active') : setClasse('inactive'));
     (classe==='inactive' ? setIcone('down') : setIcone('up'));
+    (classe==='inactive' ? setClasseAdd('o') : setClasseAdd(''));
+    (classe==='inactive' ? setClasseAdd2('a') : setClasseAdd2(''));
   }
   // ================================================================== //
 
@@ -383,7 +387,7 @@ function Loja(){
         </div>
 
         <div className="resumo-do-pedido">
-          <div className="topo-do-pedido" onClick={resumoPedido}>
+          <div className={`topo-do-pedido ${classeAdd}`} onClick={resumoPedido}>
             <div className="counter">
               {counter}
             </div>
@@ -394,7 +398,7 @@ function Loja(){
               <i className="material-icons">{`keyboard_arrow_${icone}`}</i>
             </div>
           </div>
-          <div className={`det ${classe}`}>
+          <div className={`det ${classe} ${classeAdd2}`}>
             <div className="detalhes-do-pedido">
 
               <div className={`msg-do-carrinho ${msg}`}>
