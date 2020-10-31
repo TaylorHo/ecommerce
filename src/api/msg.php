@@ -90,9 +90,8 @@ $replace = str_replace('Obs:', '%0A%20%20%20-%20%2AObs%3A%2A%20', $pro);
 $separador = '--------------';
 $total_pedido = '%2ATotal%20do%20Pedido%3A%20R%24%20' . $total . '%2A';
 $dados = '%F0%9F%91%A4%20' . $nome . '%0A%F0%9F%93%9E%20' . $tel . '%0A%F0%9F%93%8D%20' . $endereco;
-$acompanhamento = '%2AAcompanhe%20seu%20pedido%2A%0A' . 'link';
 
-$mensagem = 'https://api.whatsapp.com/send/?phone=' . $contato . '&text=' . $topo . $espaco . $replace . $espaco . $separador . '%0A' . $total_pedido . '%0A%F0%9F%92%B5%20Pagamento%3A%20' . ucfirst($pagamento_troco) . $espaco . '%2ACliente%3A%2A' . '%0A' . $separador . '%0A' . $dados . $espaco . $acompanhamento;
+$mensagem = 'https://api.whatsapp.com/send/?phone=' . $contato . '&text=' . $topo . $espaco . $replace . $espaco . $separador . '%0A' . $total_pedido . '%0A%F0%9F%92%B5%20Pagamento%3A%20' . ucfirst($pagamento_troco) . $espaco . '%2ACliente%3A%2A' . '%0A' . $separador . '%0A' . $dados;
 
 header("location: $mensagem");
 ?>
