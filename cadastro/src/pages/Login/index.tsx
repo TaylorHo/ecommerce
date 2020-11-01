@@ -8,7 +8,9 @@ function Login(){
 
   const [pass, setPass] = useState('');
   const [adminPass, setAdminPass] = useState('');
-  const [tentativas, setTentativas] = useState(0);
+	const [tentativas, setTentativas] = useState(0);
+	const [hidden, setHidden] = useState('hidden');
+	const [max, setMax] = useState('hidden');
 
   function recebeConfiguracoes(){
     if(adminPass === ''){
@@ -17,28 +19,45 @@ function Login(){
       .then((responseJSON) => {
         setAdminPass(responseJSON[5].valor);
       });
-    }
+		}
+		var t = localStorage.getItem('tentativas');
+		if(t){setTentativas(parseInt(t));}
   }
 
   function passEncrypt(password: string){
     setPass((MD5(password)).toString());
-  }
+	}
+	
+	function verificacao(){
+		var date = new Date();
+		if(adminPass === pass){
+			localStorage.setItem('accessTime', (date.getTime()).toString());
+			document.location.reload();
+		} else if (tentativas < 5){
+			setHidden('');
+			setTentativas(tentativas + 1);
+			localStorage.setItem('tentativas', tentativas.toString());
+		} else {
+			localStorage.setItem('esperar', (date.getTime()).toString());
+			setHidden('hidden');
+			setMax('');
+		}
+	}
 
   const verify = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
-    if(pass === ''){
-      alert('Insira a Senha')
-    } else {
-      if(adminPass === pass){
-        var date = new Date();
-        localStorage.setItem('accessTime', (date.getTime()).toString());
-        document.location.reload();
-      } else {
-        alert('A senha está incorreta, tente novamente!');
-        console.log(adminPass);
-        console.log(pass);
-      }
-    }
+		event.preventDefault();
+		var date = new Date();
+		var tempo = localStorage.getItem('esperar');
+		if(tempo){
+			var esperar = Math.abs(date.getTime() - parseInt(tempo));
+			if(esperar > (30 * 60000)){
+				verificacao();
+			} else {
+				setMax('');
+			}
+		} else {
+			verificacao();
+		}
   }
 
   return (
@@ -53,6 +72,14 @@ function Login(){
 					<span className="login100-form-title">
 						Painel da Loja
 					</span>
+
+					<div className={`alert alert-danger text-center ${hidden}`}>
+						Senha incorreta! Você tem mais {6 - tentativas} tentativas restantes.
+					</div>
+
+					<div className={`alert alert-danger text-center ${max}`}>
+						Número máximo de tentativas atingido. Tente novamente mais tarde.
+					</div>
 
 					<div className="wrap-input100">
 						<input className="input100" type="password" onChange={(e) => {passEncrypt(e.target.value)}} name="pass" placeholder="Senha de Acesso" />
