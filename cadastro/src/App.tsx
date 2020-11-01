@@ -4,10 +4,12 @@ import AdminPanel from './pages/Admin';
 import './assets/styles/global.css';
 
 function App() {
-  var access = localStorage.getItem('accessTime'); // pega a data do ultimo acesso
-  // criar função para calcular quanto tempo se passou desde o último acesso
-  if (access !== null){
-    return <AdminPanel />
+  var access = localStorage.getItem('accessTime');
+  var date = new Date();
+  if (access){
+    if((Math.abs(date.getTime() - parseInt(access))) < (3 * 86400000)){ // máximo 3 dias de inatividade
+      return <AdminPanel />
+    }
   }
   return <Login />
 }

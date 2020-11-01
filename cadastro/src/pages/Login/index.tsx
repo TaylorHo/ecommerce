@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import MD5 from 'crypto-js/md5';
 
 import displayImage from '../../assets/img/img-01.png';
-import './styles.css';
 
 function Login(){
 
