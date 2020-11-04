@@ -59,6 +59,8 @@ function Loja(){
 
   const [enderecoEntrega, setEnderecoEntrega] = useState({nome: '', tel: '', cidade: '', rua: '', ref: '', bairro: ''});
 
+  const [toTop, setToTop] = useState(0);
+
   // ================================================================== //
   // Adicionar produtos ao array do carrinho
   function addToCart(titulo: string, preco: string, quantidade: number, id: string, obs: string){
@@ -207,6 +209,8 @@ function Loja(){
     (classe==='inactive' ? setIcone('down') : setIcone('up'));
     (classe==='inactive' ? setClasseAdd('o') : setClasseAdd(''));
     (classe==='inactive' ? setClasseAdd2('a') : setClasseAdd2(''));
+    setToTop(window.scrollY);
+    console.log(window.scrollY);
   }
   // ================================================================== //
 
@@ -299,199 +303,201 @@ function Loja(){
   return(
     <>
       <Circle customLoading={loading} />
+      <style>:root{`{--color-primary: ${cor}}`}</style>
+      <div className="main" onLoad={recebeConfiguracoes}>
       <header>
         <div>
           <img src={logo} alt="Logo"/>
         </div>
       </header>
-      <style>:root{`{--color-primary: ${cor}}`}</style>
-      <div className="main" onLoad={recebeConfiguracoes}>
 
-        <div id="pagina" className="pagina">
-          <div className="separador-topo"></div>
-          <div className="select-block">
-              <select value={category} name="categorias" onChange={(e) => { categorias(e.target.value) }}>
-                  <option value="" disabled hidden >Categoria</option>
-                  {categoryArray.map((cat: any) => {
-                    if(cat !== 0){
-                      return <option key={cat} value={cat}>{cat}</option>
+        <div className="resize-mode">
+          <div id="pagina" className="pagina">
+            <div className="separador-topo"></div>
+            <div className="select-block">
+                <select value={category} name="categorias" onChange={(e) => { categorias(e.target.value) }}>
+                    <option value="" disabled hidden >Categoria</option>
+                    {categoryArray.map((cat: any) => {
+                      if(cat !== 0){
+                        return <option key={cat} value={cat}>{cat}</option>
+                      }
+                    })}
+                </select>
+            </div>
+
+            <div className="produtos">
+              {categoryArray.map((cat: any) => {
+                if(cat !== 0){
+                  return (
+                    <div key={cat}>
+                    <div className="marcador" id={cat}></div>
+                    <div className="categoria">
+                      <h2>{cat}</h2>
+                    </div>
+                    {productsArray.map((produto: productProps) => {
+                      if(cat !== 0 && cat === produto.categoria){
+                        return (
+                          <div className="item" key={produto.id}>
+                            <div className="descricao-do-produto">
+                              <h3>{produto.titulo}</h3>
+                              <p>{produto.detalhes}</p>
+                              <div className="botao-adicionar">
+                                <a onClick={() => toggleProductPopup(produto.id, 1)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                                <span>R${produto.preco}</span>
+                              </div>
+                            </div>
+          
+                            <div className="imagem-do-produto">
+                              <img src={produto.foto} alt="Foto do produto"/>
+                            </div>
+          
+                            <div id={`produto-${produto.id}`} className="product-popup inactive">
+                              <div className="dados-do-popup-do-produto">
+                                <div className="fechar-popup">
+                                  <i onClick={() => toggleProductPopup(produto.id, 0)} className="material-icons">clear</i>
+                                </div>
+                                <div className="conteudo-do-popup-do-produto">
+                                  <h3 className="title">{produto.titulo}</h3>
+                                  <div className="imagem-do-popup">
+                                    <img src={produto.foto} alt="Foto do produto"/>
+                                  </div>
+                                  <div className="descricao-do-produto">
+                                    <p>{produto.detalhes}</p>
+                                  </div>
+                                  <div className="observacoes">
+                                    <input type="text" name="observacoes" placeholder="Observação..." value={observacao} onChange={(e) => { setObservacao(e.target.value) }}/>
+                                  </div>
+                                </div>
+                                <div className="adicionar-produto-ao-carrinho">
+                                  <div className="quantidade">
+                                    <i onClick={diminuiQuantidade} className="material-icons">remove</i>
+                                    <input type="text" value={quantidade} readOnly/>
+                                    <i onClick={aumentaQuantidade} className="material-icons">add</i>
+                                  </div>
+                                  <div className="adicionar">
+                                    <a onClick={() => addToCart(produto.titulo, produto.preco, quantidade, produto.id, observacao)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      }
+                  })}
+                  </div>
+                  )
+                }
+              })}
+            </div>
+          </div>
+
+          <div className="resumo-do-pedido">
+            <div className={`topo-do-pedido ${classeAdd}`} onClick={resumoPedido}>
+              <div className="counter">
+                {counter}
+              </div>
+              <div className="titulo">
+                Resumo do Pedido
+              </div>
+              <div className="ir-ao-topo">
+                <i className="material-icons">{`keyboard_arrow_${icone}`}</i>
+              </div>
+            </div>
+            <div id="showOnDesktop" className={`det ${classe} ${classeAdd2}`}>
+              <div className="detalhes-do-pedido">
+
+                <div className={`msg-do-carrinho ${msg}`}>
+                    <span>Carrinho vazio, adicione produtos para iniciar o pedido.</span>
+                </div>
+
+                <div className={`listagem-de-produtos ${listagem}`}>
+                  {cartArray.map((produto, index) => {
+                    if (produto.cart === 1){
+                      return(
+                        <div className="lista" key={index}>
+                          <span className="dados-txt"><strong>{produto.quant}X</strong> {produto.titulo} - </span>&nbsp;
+                          <span className="dados-val">R${produto.preco}&nbsp;</span><i onClick={() => removeFromCart(index)} className="far fa-trash-alt"></i>
+                        </div>
+                      );
                     }
                   })}
-              </select>
-          </div>
+                </div>
 
-          <div className="produtos">
-            {categoryArray.map((cat: any) => {
-              if(cat !== 0){
-                return (
-                  <div key={cat}>
-                  <div className="marcador" id={cat}></div>
-                  <div className="categoria">
-                    <h2>{cat}</h2>
+                <div className="nota-do-pedido">
+                  <div className="subtotal dados">
+                    <span className="dados-txt">Subtotal:</span>&nbsp;
+                    <span className="dados-val">R${preco}</span>
                   </div>
-                  {productsArray.map((produto: productProps) => {
-                    if(cat !== 0 && cat === produto.categoria){
-                      return (
-                        <div className="item" key={produto.id}>
-                          <div className="descricao-do-produto">
-                            <h3>{produto.titulo}</h3>
-                            <p>{produto.detalhes}</p>
-                            <div className="botao-adicionar">
-                              <a onClick={() => toggleProductPopup(produto.id, 1)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
-                              <span>R${produto.preco}</span>
-                            </div>
-                          </div>
-        
-                          <div className="imagem-do-produto">
-                            <img src={produto.foto} alt="Foto do produto"/>
-                          </div>
-        
-                          <div id={`produto-${produto.id}`} className="product-popup inactive">
-                            <div className="dados-do-popup-do-produto">
-                              <div className="fechar-popup">
-                                <i onClick={() => toggleProductPopup(produto.id, 0)} className="material-icons">clear</i>
-                              </div>
-                              <div className="conteudo-do-popup-do-produto">
-                                <h3 className="title">{produto.titulo}</h3>
-                                <div className="imagem-do-popup">
-                                  <img src={produto.foto} alt="Foto do produto"/>
-                                </div>
-                                <div className="descricao-do-produto">
-                                  <p>{produto.detalhes}</p>
-                                </div>
-                                <div className="observacoes">
-                                  <input type="text" name="observacoes" placeholder="Observação..." value={observacao} onChange={(e) => { setObservacao(e.target.value) }}/>
-                                </div>
-                              </div>
-                              <div className="adicionar-produto-ao-carrinho">
-                                <div className="quantidade">
-                                  <i onClick={diminuiQuantidade} className="material-icons">remove</i>
-                                  <input type="text" value={quantidade} readOnly/>
-                                  <i onClick={aumentaQuantidade} className="material-icons">add</i>
-                                </div>
-                                <div className="adicionar">
-                                  <a onClick={() => addToCart(produto.titulo, produto.preco, quantidade, produto.id, observacao)}><i className="material-icons">add_shopping_cart</i> Adicionar</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                  <div className="entrega dados">
+                    <span className="dados-txt">Entrega:</span>&nbsp;
+                    <span className="dados-val">R${custoEntrega}</span>
+                  </div>
+                  <div className="total dados">
+                    <span className="dados-txt">Total:</span>&nbsp;
+                    <span className="dados-val">R${(parseFloat(preco) + parseFloat(custoEntrega)).toFixed(2)}</span>
+                  </div>
+                </div>
+
+                <div className="detalhes">
+                  <div className="title">
+                    <span>Detalhes do Pedido</span>
+                  </div>
+                  <div className="metodo-de-envio">
+                    <select value={envio} name="retirar-ou-receber" onChange={(e) => metodoDeEnvio(e.target.value)}>
+                      <option value="" disabled hidden >Retirar ou Receber?</option>
+                      <option value="retirar">Retirar Pessoalmente</option>
+                      <option value="receber">Receber por Delivery</option>
+                    </select>
+                    <div className={entrega}>
+                      <div className="endereco">
+                        <i className="material-icons">create</i>
+                        <a onClick={() => setPopupEntrega('active')}>&nbsp;Editar Endereço</a>
+                      </div>
+                      <div className="metodo-de-pagamento">
+                        <select value={pagamento} name="metodos-de-pagamento" onChange={(e) => metodoDePagamento(e.target.value)}>
+                          <option value="" disabled hidden >Método de Pagamento</option>
+                          <option value="dinheiro">Dinheiro</option>
+                          <option value="credito">Cartão de Crédito</option>
+                          <option value="debito">Cartão de Débito</option>
+                        </select>
+                        <div className={`troco ${troco}`}>
+                          <input type="number" value={trocoVal} placeholder="Troco para" onChange={(e) => setTrocoVal(e.target.value)}/>
                         </div>
-                      )
-                    }
-                })}
-                </div>
-                )
-              }
-            })}
-          </div>
-        </div>
-
-        <div className="resumo-do-pedido">
-          <div className={`topo-do-pedido ${classeAdd}`} onClick={resumoPedido}>
-            <div className="counter">
-              {counter}
-            </div>
-            <div className="titulo">
-              Resumo do Pedido
-            </div>
-            <div className="ir-ao-topo">
-              <i className="material-icons">{`keyboard_arrow_${icone}`}</i>
-            </div>
-          </div>
-          <div className={`det ${classe} ${classeAdd2}`}>
-            <div className="detalhes-do-pedido">
-
-              <div className={`msg-do-carrinho ${msg}`}>
-                  <span>Carrinho vazio, adicione produtos para iniciar o pedido.</span>
-              </div>
-
-              <div className={`listagem-de-produtos ${listagem}`}>
-                {cartArray.map((produto, index) => {
-                  if (produto.cart === 1){
-                    return(
-                      <div className="lista" key={index}>
-                        <span className="dados-txt"><strong>{produto.quant}X</strong> {produto.titulo} - </span>&nbsp;
-                        <span className="dados-val">R${produto.preco}&nbsp;</span><i onClick={() => removeFromCart(index)} className="far fa-trash-alt"></i>
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-
-              <div className="nota-do-pedido">
-                <div className="subtotal dados">
-                  <span className="dados-txt">Subtotal:</span>&nbsp;
-                  <span className="dados-val">R${preco}</span>
-                </div>
-                <div className="entrega dados">
-                  <span className="dados-txt">Entrega:</span>&nbsp;
-                  <span className="dados-val">R${custoEntrega}</span>
-                </div>
-                <div className="total dados">
-                  <span className="dados-txt">Total:</span>&nbsp;
-                  <span className="dados-val">R${(parseFloat(preco) + parseFloat(custoEntrega)).toFixed(2)}</span>
-                </div>
-              </div>
-
-              <div className="detalhes">
-                <div className="title">
-                  <span>Detalhes do Pedido</span>
-                </div>
-                <div className="metodo-de-envio">
-                  <select value={envio} name="retirar-ou-receber" onChange={(e) => metodoDeEnvio(e.target.value)}>
-                    <option value="" disabled hidden >Retirar ou Receber?</option>
-                    <option value="retirar">Retirar Pessoalmente</option>
-                    <option value="receber">Receber por Delivery</option>
-                  </select>
-                  <div className={entrega}>
-                    <div className="endereco">
-                      <i className="material-icons">create</i>
-                      <a onClick={() => setPopupEntrega('active')}>&nbsp;Editar Endereço</a>
-                    </div>
-                    <div className="metodo-de-pagamento">
-                      <select value={pagamento} name="metodos-de-pagamento" onChange={(e) => metodoDePagamento(e.target.value)}>
-                        <option value="" disabled hidden >Método de Pagamento</option>
-                        <option value="dinheiro">Dinheiro</option>
-                        <option value="credito">Cartão de Crédito</option>
-                        <option value="debito">Cartão de Débito</option>
-                      </select>
-                      <div className={`troco ${troco}`}>
-                        <input type="number" value={trocoVal} placeholder="Troco para" onChange={(e) => setTrocoVal(e.target.value)}/>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="popups-de-entrega">
-                <div className={`popup product-popup ${popupEntrega}`}>
-                  <div className="fechar-popup">
-                    <i onClick={() => setPopupEntrega('inactive')} className="material-icons">clear</i>
+                <div className="popups-de-entrega">
+                  <div className={`popup product-popup ${popupEntrega}`}>
+                    <div className="fechar-popup">
+                      <i onClick={() => setPopupEntrega('inactive')} className="material-icons">clear</i>
+                    </div>
+                    <h2 className="title">Endereço e dados</h2>
+                    <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
+                    <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
+                    <input type="text" value={cidade} placeholder="Cidade/Município" onChange={(e) => setCidade(e.target.value)}/>
+                    <input type="text" value={rua} placeholder="Rua" onChange={(e) => setRua(e.target.value)}/>
+                    <input type="text" value={numero} placeholder="Número" onChange={(e) => setNumero(e.target.value)}/>
+                    <input type="text" value={ref} placeholder="Apto, ponto de ref. (opcional)" onChange={(e) => setRef(e.target.value)}/>
+                    <input type="text" value={bairro} placeholder="Bairro" onChange={(e) => setBairro(e.target.value)}/>
+                    <button onClick={salvaEndereco}>Feito</button>
                   </div>
-                  <h2 className="title">Endereço e dados</h2>
-                  <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
-                  <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
-                  <input type="text" value={cidade} placeholder="Cidade/Município" onChange={(e) => setCidade(e.target.value)}/>
-                  <input type="text" value={rua} placeholder="Rua" onChange={(e) => setRua(e.target.value)}/>
-                  <input type="text" value={numero} placeholder="Número" onChange={(e) => setNumero(e.target.value)}/>
-                  <input type="text" value={ref} placeholder="Apto, ponto de ref. (opcional)" onChange={(e) => setRef(e.target.value)}/>
-                  <input type="text" value={bairro} placeholder="Bairro" onChange={(e) => setBairro(e.target.value)}/>
-                  <button onClick={salvaEndereco}>Feito</button>
-                </div>
-                <div className={`popup product-popup ${popupDados}`}>
-                  <div className="fechar-popup">
-                    <i onClick={() => setPopupDados('inactive')} className="material-icons">clear</i>
+                  <div className={`popup product-popup ${popupDados}`}>
+                    <div className="fechar-popup">
+                      <i onClick={() => setPopupDados('inactive')} className="material-icons">clear</i>
+                    </div>
+                    <h2>Dados de Contato</h2>
+                    <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
+                    <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
+                    <button onClick={linkRetirar}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</button>
                   </div>
-                  <h2>Dados de Contato</h2>
-                  <input type="text" value={nome} placeholder="Nome Completo" onChange={(e) => setNome(e.target.value)}/>
-                  <input type="text" value={tel} placeholder="Telefone" onChange={(e) => setTel(e.target.value)}/>
-                  <button onClick={linkRetirar}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</button>
                 </div>
-              </div>
 
-              <div className="fixed-bottom">
-                <a onClick={redirectEnvio}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</a>
-              </div>
+                <div className="fixed-bottom">
+                  <a onClick={redirectEnvio}><img src={Whatsapp}  alt="Whatsapp"/> Realizar Pedido</a>
+                </div>
 
+              </div>
             </div>
           </div>
         </div>

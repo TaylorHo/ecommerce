@@ -117,7 +117,7 @@ header img {
 .detalhes-do-pedido {
   font-size: 1.6rem;
   background: var(--color-gray-lighter);
-  height: 100vh;
+  height: calc(100% - 85px);
   overflow-y: scroll;
 }
 
@@ -169,6 +169,7 @@ header img {
 .detalhes-do-pedido .detalhes {
   padding: 15px;
   line-height: 2em;
+  height: 100%;
 }
 
 .detalhes-do-pedido .detalhes .title {
@@ -197,7 +198,6 @@ header img {
 
 .detalhes-do-pedido .detalhes .metodo-de-envio {
   padding-top: 15px;
-  padding-bottom: 50%;
 }
 
 .detalhes-do-pedido .detalhes .metodo-de-pagamento {
@@ -210,7 +210,7 @@ header img {
 }
 
 .detalhes-do-pedido .fixed-bottom {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   background: var(--color-gray-medium);
   width: 100%;
@@ -413,7 +413,7 @@ header img {
 }
 
 .adicionar-produto-ao-carrinho {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   padding-bottom: 20px;
   margin-left: -30px;
@@ -469,14 +469,6 @@ header img {
   font-size: 16px;
 }
 
-@media (min-width: 400px){
-  .imagem-do-produto {
-    padding-top: 0;
-  }
-}
-
-
-
 .separador-topo {
   height: 20px;
   width: 111%;
@@ -509,4 +501,60 @@ select {
   overflow: hidden;
   text-align: center;
   text-align-last: center;
+}
+
+@media (min-width: 400px){
+  .imagem-do-produto {
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 740px){
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-gray-lighter);
+  }
+  ::-webkit-scrollbar {
+      width: 6px;
+      background: var(--color-gray-lighter);
+  }
+  ::-webkit-scrollbar-thumb {
+      background: #dad7d7;
+  }
+
+  .resize-mode {
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+    padding: 30px 0 30px 0;
+  }
+  .o {
+    height: auto!important;
+  }
+  .a {
+    height: auto!important;
+  }
+  .pagina {
+    height: 80vh;
+    width: 60%;
+    float: left;
+  }
+  .resumo-do-pedido {
+    position: fixed;
+    top: 170px;
+    right: 5%;
+    width: 25%!important;
+  }
+  .ir-ao-topo {
+    display: none;
+  }
+  .resumo-do-pedido .det#showOnDesktop {
+    display: block;
+  }
+  .product-popup {
+    max-width: 40%;
+    max-height: 580px;
+    margin-left: 30%;
+    margin-top: 3%;
+  }
 }
